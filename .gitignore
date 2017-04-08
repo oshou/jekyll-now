@@ -1,4 +1,7 @@
 _site
+_include/disqus.html
+_include/analytics.html
+_include/adsense.html
 .DS_Store
 .jekyll
 .jekyll-metadata
