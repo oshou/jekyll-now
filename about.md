@@ -3,14 +3,9 @@ layout: page
 title: About
 permalink: /about/
 ---
-
-Some information about you!
-
-### More Information
 - 渋谷でインフラエンジニアをやっています。
-- 好きなテーマはLinux, Ansible, Docker, Ruby, Python etc...
-
-A place to include any other types of information that you'd like to include about yourself.
+- 気になるテーマはLinux, Docker, Vagrant, Ansible, Ruby, RazberryPi
+- OSカーネル周りの知見をもっと増やしたい...
 
 ### Contact me
 
