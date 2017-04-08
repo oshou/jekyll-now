@@ -19,7 +19,8 @@ html {
 
 body {
 	background: $white;
-  font: 18px/1.4 $Meiryo;
+  font-family: $Meiryo;
+  font-size: 16px;
   color: $darkGray;
 }
 
@@ -45,22 +46,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 1.8em;
+  font-size: 24px;
   a {
     color: inherit;
   }
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 20px;
 }
 
 h3 {
-  font-size: 14px;
+  font-size: 18px;
 }
 
 h4 {
-  font-size: 12px;
+  font-size: 14px;
   color: $gray;
 }
 
@@ -257,7 +258,7 @@ nav {
     border-left: 2px solid $gray;
     padding: 0.1em 1em;
     color: $gray;
-    font-size: 22px;
+    font-size: 16px;
     font-style: italic;
   }
 
