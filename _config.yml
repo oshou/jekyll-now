@@ -85,4 +85,6 @@ exclude:
   - README.md
   - CNAME
 
+excerpt_separator: "<!-- more -->"
+
 theme: jekyll-theme-slate
