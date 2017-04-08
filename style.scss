@@ -19,8 +19,7 @@ html {
 
 body {
 	background: $white;
-  font-family: $Meiryo;
-  font-size: 16px;
+  font: 16px/1.4 $Meiryo;
   color: $darkGray;
 }
 
@@ -259,7 +258,6 @@ nav {
     padding: 0.1em 1em;
     color: $gray;
     font-size: 16px;
-    font-style: italic;
   }
 
   .comments {
