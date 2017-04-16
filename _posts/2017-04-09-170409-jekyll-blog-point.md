@@ -18,17 +18,18 @@ title: jekyllブログを始めたらまず最初に設定したいポイント
 - 記事データのバックアップ不要。全てGithub上に残ってる。
 - Githubのサーバ上で稼働する
 
-## 管理者情報の入力
+## 設定したいポイント
+### 管理者情報の入力
 - /.config.ymlで以下を入力
   - name: ※ブログサイトのタイトル
   - description: ※ブログサイトの説明文
   - avatar: アイコン画像のURL
   - footer_links: mailや各種SNSのアカウント
 
-## プロフィールの編集
+### プロフィールの編集
 - /about.mdで連絡先、プロフィールを入力
 
-## GoogleAnalytics連携
+### GoogleAnalytics連携
 - 自分のGoogleAnalytics管理画面からjekyllブログ用アカウントを作成
   - GoogleAnalyticsログイン
   - 「管理」--> 「新しいアカウントを作成」
@@ -43,7 +44,7 @@ title: jekyllブログを始めたらまず最初に設定したいポイント
   - /.config.yml
     - google_analytics: UA-**********
 
-## コメント機能追加(DISQUS連携)
+### コメント機能追加(DISQUS連携)
 - コメント欄には「DISQUS」という外部オンラインサービスを使います。
 - DISQUSとは?
   - ブログやサイトに多機能コメント欄を提供するオンラインサービスです。
@@ -53,20 +54,20 @@ title: jekyllブログを始めたらまず最初に設定したいポイント
   - DISQUSアカウントを作成
   - jekyll設定ファイルにdisqusショートネームを設定
 
-## フォント
+### フォント
 - デフォルトフォントの編集
   - /style.scssを編集
     - 私の場合は、font-typeは"Meiryo"、font-size: h1は28px,h2=24px,h3=18p辺りは変更する。
 
-## テーマ
+### テーマ
 - 充実しているのでお好みで選ぶ。
   - [jekyllthemes.io](https://jekyllthemes.io)
   - [jekyllthemes.org](https://jekyllthemes.org)
 
-## プラグイン
+### プラグイン
 - インストール方法
   - http://jekyllrb-ja.github.io/docs/plugins/
 
-## 参考
+### 参考
 - 30分のチュートリアルでjekyllを理解する
   - https://goo.gl/toJfsf
