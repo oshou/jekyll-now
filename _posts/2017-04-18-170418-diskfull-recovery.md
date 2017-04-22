@@ -18,14 +18,14 @@ tmpfs           498M     0  498M   0% /dev/shm
 ```
 
 ### ディスク容量の内訳を確認
-- **du -sh [容量内訳を確認したいディレクトリのパス]**
+- **du -sh [容量内訳を確認したいディレクトリのパス]**  
 ```
 例) du -sh /\*　(ルート直下）    
 例) du -sh ./\*　(カレントディレクトリ直下）  
 例) du -sh /var/\*　(varディレクトリ直下）
-例) du -sh /\home -x  (homeディレクトリ直下でマウントポイントある場合除外する)
+例) du -sh /\home -x  (homeディレクトリ直下でマウントポイントある場合除外する)  
 
-root@ip-xxx-xxx-xxx-xxx ~]# du -sh /
+  root@ip-xxx-xxx-xxx-xxx ~]# du -sh /
 7.8M    /bin
 47M     /boot
 4.0K    /cgroup
@@ -51,7 +51,7 @@ root@ip-xxx-xxx-xxx-xxx ~]# du -sh /
 1.3G    /var
 ```
 
-## 複数階層をまとめて見たい場合
+複数階層をまとめて見たい場合
 - **du -h --max-depth [階層数] [容量内訳を確認したいディレクトリのパス]**   
 ```
 例) du -h --max-depth 2 /\*　(ルート直下)
@@ -64,10 +64,10 @@ root@ip-xxx-xxx-xxx-xxx ~]# du -sh /
 - **yum clean all(すべてのキャッシュを削除）**
 
 ### tmpデータの削除
-- 削除可能と判断出来るものは削除する。
+- 可能なかぎり削除する。
 - 保管間隔を狭めたい場合は以下の時間を編集する  
 **/etc/cron.daily/tmpwatch**  
 ```
-例）/var/tmp内のファイルで720時間アクセス無しのものは削除  
+例）/var/tmp内のファイルで720時間アクセス無しのものは削除する場合  
 　　/usr/sbin/tmpwatch 720 /var/tmp
 ```
