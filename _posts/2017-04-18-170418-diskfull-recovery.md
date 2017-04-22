@@ -6,24 +6,25 @@ Qiitaから転載ですが、ディスク容量がいっぱいの時にすぐ出
 <!-- more -->
 
 TreasureDataログイン後の左メニューから「Admin」アイコンをクリック  
-##現在のディスク容量の確認
-###全体のディスク容量を確認
-* **df -h**
 
->
+## 現在のディスク容量の確認
+### 全体のディスク容量を確認
+* **df -h**
+```
 [root@ip-xxx-xxx-xxx-xxx ~]# df -h
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/xvda1      6.0G  4.1G  1.6G  73% /
 tmpfs           498M     0  498M   0% /dev/shm
+```
 
-###ディスク容量の内訳を確認
+### ディスク容量の内訳を確認
 * **du -sh [容量内訳を確認したいディレクトリのパス]   
+```
 例) du -sh /\*　(ルート直下）    
 例) du -sh ./\*　(カレントディレクトリ直下）  
 例) du -sh /var/\*　(varディレクトリ直下）
 例) du -sh /\home -x  (homeディレクトリ直下でマウントポイントある場合除外する) **
 
->
 root@ip-xxx-xxx-xxx-xxx ~]# du -sh /
 7.8M    /bin
 47M     /boot
@@ -48,21 +49,25 @@ root@ip-xxx-xxx-xxx-xxx ~]# du -sh /
 204K    /tmp
 2.3G    /usr
 1.3G    /var
-##
+```
 
-複数階層をまとめて見たい場合は以下の指定で出来るらしい
+## 複数階層をまとめて見たい場合
 * **du -h --max-depth [階層数] [容量内訳を確認したいディレクトリのパス]**   
+```
 例) du -h --max-depth 2 /\*　(ルート直下)
+```
 
 
-##不要データの削除
-###yumインストールデータのキャッシュ削除
+## 不要データの削除
+### yumインストールデータのキャッシュ削除
 * **du -sh /var/cache/yum（ディスク使用容量を確認）**
 * **yum clean all(すべてのキャッシュを削除）**
 
-###tmpデータの削除
+### tmpデータの削除
 * 削除可能と判断出来るものは削除する。
 * 保管間隔を狭めたい場合は以下の時間を編集する  
 **/etc/cron.daily/tmpwatch**  
+```
 例）/var/tmp内のファイルで720時間アクセス無しのものは削除  
 　　/usr/sbin/tmpwatch 720 /var/tmp
+```
