@@ -11,7 +11,7 @@ TreasureDataログイン後の左メニューから「Admin」アイコンをク
 ### 全体のディスク容量を確認
 - **df -h**
 ```
-[root@ip-xxx-xxx-xxx-xxx ~]# df -h
+[root@xxxx ~]# df -h
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/xvda1      6.0G  4.1G  1.6G  73% /
 tmpfs           498M     0  498M   0% /dev/shm
@@ -20,12 +20,11 @@ tmpfs           498M     0  498M   0% /dev/shm
 ### ディスク容量の内訳を確認
 - **du -sh [容量内訳を確認したいディレクトリのパス]**  
 ```
-例) du -sh /\*　(ルート直下）    
-例) du -sh ./\*　(カレントディレクトリ直下）  
-例) du -sh /var/\*　(varディレクトリ直下）
-例) du -sh /\home -x  (homeディレクトリ直下でマウントポイントある場合除外する)  
-
-  root@ip-xxx-xxx-xxx-xxx ~]# du -sh /
+例) $ du -sh /\*　(ルート直下）    
+例) $ du -sh ./\*　(カレントディレクトリ直下）  
+例) $ du -sh /var/\*　(varディレクトリ直下）
+例) $ du -sh /\home -x  (homeディレクトリ直下でマウントポイントある場合除外する)
+[root@xxxx ~]# df -sh
 7.8M    /bin
 47M     /boot
 4.0K    /cgroup
@@ -54,7 +53,7 @@ tmpfs           498M     0  498M   0% /dev/shm
 複数階層をまとめて見たい場合
 - **du -h --max-depth [階層数] [容量内訳を確認したいディレクトリのパス]**   
 ```
-例) du -h --max-depth 2 /\*　(ルート直下)
+例) $ du -h --max-depth 2 /\*　(ルート直下)
 ```
 
 
@@ -69,5 +68,5 @@ tmpfs           498M     0  498M   0% /dev/shm
 **/etc/cron.daily/tmpwatch**  
 ```
 例）/var/tmp内のファイルで720時間アクセス無しのものは削除する場合  
-　　/usr/sbin/tmpwatch 720 /var/tmp
+　　$ /usr/sbin/tmpwatch 720 /var/tmp
 ```
