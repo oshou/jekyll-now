@@ -1,30 +1,35 @@
 ---
 layout: post
-title: KVMの運用でよく使うコマンド一覧
+title: KVM運用でよく使うコマンド一覧
 ---
-KVMの基本的なコマンドメモ
+KVM運用でよく使うコマンド類の備忘録
 <!-- more -->
 
-- 仮想マシンの一覧表示
+- ホスト管理のVM一覧 
   -  virsh list --all
-- 各仮想マシンの構成情報一式の表示
-  - virsh dumpxml [仮想マシン名]
-- 各仮想マシンの詳細表示
-  - virsh dominfo [仮想マシン名]
-- ストレージプールの一覧表示
+- ホスト管理の各VM詳細ステータス(割当メモリ等)
+  - virsh dominfo [VM名]
+- ホスト管理の各VM構成情報
+  - virsh dumpxml [VM名]
+- ホスト管理の仮想ネットワーク一覧
+  - virsh net-list
+- ホスト管理の物理インターフェース一覧
+  - virsh iface-list --all
+- ホスト管理のストレージプール一覧
   -  virsh  pool-list
 - 各ストレージプールの詳細表示
   - virsh  pool-info [ストレージプール名]
-- 仮想ネットワークの表示
-  - virsh net-list
-- ゲスト起動
-  - virsh start testvm
-- ゲスト自動起動
-  - virsh autostart testvm
-- ゲスト自動起動停止
-  - virsh autostart --disable testvm
-- ゲストOSの設定の変更
-  - virsh edit testvm
+- ゲストOS 起動
+  - virsh start [VM名]
+- ゲストOS 自動起動
+  - virsh autostart [VM名]
+- ゲストOS 停止
+  - virsh shutdown [VM名]
+- ゲストOS 自動起動停止
+  - virsh autostart --disable [VM名]
+- ゲストOS 設定変更
+  - virsh edit [VM名]
+
 
 ## 参考
 - 10分で始めるKVM
