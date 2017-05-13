@@ -1,6 +1,8 @@
 ---
 layout: post
 title: TreasureDataの使用レコード数の確認方法
+tags: 
+- treasuredata
 ---
 TreasureDataは「ストア出来るのは月間xxxレコード、年間xxxレコードまで」という上限があるかと思いますが、上限超えしていないか確認のため現在使用量を調べてみました。
 <!-- more -->

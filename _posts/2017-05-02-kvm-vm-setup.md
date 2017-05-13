@@ -1,6 +1,8 @@
 ---
 layout: post
 title: CentOS7でKVM仮想マシン環境を作成してみた
+tags: 
+- KVM
 ---
 KVM仮想化のゲストOS作成手順をまとめてみた
 <!-- more -->

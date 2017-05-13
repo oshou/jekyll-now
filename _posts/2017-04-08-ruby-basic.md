@@ -1,6 +1,8 @@
 ---
 layout: post
 title: Ruby基本文法メモ
+tags: 
+- ruby
 ---
 よく使うライブラリ等まとめてみた
 <!-- more -->
