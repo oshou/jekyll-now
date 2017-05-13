@@ -124,7 +124,7 @@ http://www.way-on.com.tw/PCbasal/kiso/memory1.htm
     - アルファベット圏はASCIIがメインだが、カタカナ、ひらがな、常用漢字等を考えると日本では「JIS X xxxx」系が必要
     - 世界中の文字を網羅した統一的な文字集合がUnicode。普及&整備途中だが将来的に主力となる予定。
 - 文字符号化方式
-  - **「それぞれのテキスト文字をどのビットパターンに割り振るか？」の定義**
+  - **「それぞれのテキスト文字をどのビットパターンに割り当てるか？」の定義**
   - **例)EUC-JP、Shift-JIS(cp932もShift-JIS亜種)、UTF-8、UTF-16等**
     - UNIX/LinuxではEUC-JP(Extended UNIX Code Format for Japanese)がメイン。
     - WindowsではShift-JIS亜種のcp932がメイン

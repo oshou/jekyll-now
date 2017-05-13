@@ -1,25 +1,25 @@
 ---
 layout: post
-title: MySQL基礎コマンド チートシート
+title: MySQL基礎コマンド チートシート(随時更新)
 tags: 
 - mysql
 ---
 忘れがちなMySQL基礎コマンドをまとめてみた。  
-先頭に「mysql> 」が付いたものはmysqlログイン後、ついていないものはログイン前に実施する。  
 随時更新。
   
 <!-- more -->
+先頭に「mysql> 」が付いたものはmysqlログイン後、ついていないものはログイン前に実施する。
   
 ## 基本操作
 ### MySQLバージョン確認
-$ mysql -V
-以下のような画面が表示されたらok  
+$ mysql -V  
+以下のような画面が表示されたらok    
 $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 
 ### MySQLログイン
-$ mysql -u'ユーザー名' -p'パスワード'
-$ mysql -u'ユーザー名' -p'パスワード' DB名 < input.sql (特定ユーザで接続し外部SQLファイルを投入する場合)
-$ mysql -u'ユーザー名' -p'パスワード' DB名 > output.sql (特定ユーザで接続しやりとりを外部SQLファイルに記録)
+$ mysql -u'ユーザー名' -p'パスワード'  
+$ mysql -u'ユーザー名' -p'パスワード' DB名 < input.sql (特定ユーザで接続し外部SQLファイルを投入する場合)  
+$ mysql -u'ユーザー名' -p'パスワード' DB名 > output.sql (特定ユーザで接続しやりとりを外部SQLファイルに記録)  
 
 ### MySQLログアウト
 $ mysql> exit;
@@ -112,7 +112,21 @@ $ mysql> update table set (field1=1) where (field2=4);
 
 
 ## バックアップ
-### MySQLバックアップ
+### 全DBのバックアップ
+- mysqldump -u'ユーザー名' -p'パスワード' --all-databases > backup.sql
 
+### 特定DBのバックアップ
+- mysqldump -u'ユーザー名' -p'パスワード' DB名 > backup.sql
 
-## 参考
+### 実行時にエラーが出た場合
+以下エラーが出た場合はmy.cnfを修正
+「mysqldump: unknown variable 'symbolic-links=0'」
+変更箇所
+- MySQLの設定ファイル「my.cnf」にて「symbolic-links」をコメントアウト
+
+## リストア
+### 全DBのリストア
+- mysqldump -u'ユーザー名' -p'パスワード' < backup.sql
+
+### 特定DBのリストア
+- mysqldump -u'ユーザー名' -p'パスワード' DB名 < backup.sql
