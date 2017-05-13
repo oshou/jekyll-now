@@ -1,22 +1,23 @@
 ---
 layout: post
-title: AmazonEC2Linux開発環境構築メモ
+title: Amazon EC2 Linux開発環境構築メモ
 tags: 
 - os
 ---
 AWS環境で開発環境構築した時の各種手順をまとめてみた
+  
 <!-- more -->
 AWSへSSH接続可能になったら以下を実施
 
-##環境
+## 環境
 - RHEL6.5
 - Apache2.2.15(Unix)
 - PHP5.4.33
 - MySQL5.6
 
-##OS基本設定
+## OS基本設定
 
-###rootパスワード設定
+### rootパスワード設定
 - rootパスワードを設定
     - ec2-userでログイン
     - sudo su -
@@ -24,7 +25,7 @@ AWSへSSH接続可能になったら以下を実施
     - 新パスワードを設定
     - 「all authentication tokens updated successfully.」と表示されたらOK
 
-###作業用ユーザーを作成
+### 作業用ユーザーを作成
 - デフォルトのec2-user以外のユーザーを作成
     - su -
     - useadd user1
@@ -36,7 +37,7 @@ AWSへSSH接続可能になったら以下を実施
         - 以下コメントアウトを外す
         - #%wheel ALL=(ALL) ALL  →  %wheel ALL=(ALL) ALL
 
-###SSHポート番号変更
+### SSHポート番号変更
 - sshのデフォルト22番から変更
     - vi /etc/ssh/sshd_config
         - port 22 → それ以外(2222とか）
@@ -44,7 +45,7 @@ AWSへSSH接続可能になったら以下を実施
     - service sshd restart
 - 変更後のポートに対してsshログイン可能であることを確認
 
-###セキュリティグループの設定
+### セキュリティグループの設定
 - HTTP,HTTPS,SSHのみ許可する
     - EC2管理コンソールにログイン
     - サブメニューのセキュリティグループからインスタンスで使用するグループを選択
@@ -54,21 +55,21 @@ AWSへSSH接続可能になったら以下を実施
         - HTTPS(443)
         - MySQL(3306)
       
-###タイムゾーン変更
+### タイムゾーン変更
 - 日本時間に変更する
     - date で現在の設定を確認
     - sudo cp -p /usr/share/zoneinfo/Japan /etc/localtime
     - date 日本時間になっている事を確認
 
-###日本語設定
+### 日本語設定
 - 日本語設定に変更
     - vi /etc/sysconfig/i18n
         - LANG=en_US.UTF-8 → LANG=ja_JP.UTF-8
        
-###Fix更新
+### Fix更新
 - yum update -y
 
-###cloud-init用の事前環境設定
+### cloud-init用の事前環境設定
 - EC2インスタンスコピー時に環境設定が変わってしまう問題を防ぐために以下を行います。
     - vi /etc/cloud/cloud.cfg
         - preserve_hostname:true　 ##再起動時にホスト名が変更されしまう現象を防ぐ
@@ -78,7 +79,7 @@ AWSへSSH接続可能になったら以下を実施
         - ZONE="Asia/Tokyo"        ##Asia/Tokyo指定の場合
         - UTC = True
 
-###メールアドレス設定
+### メールアドレス設定
 - 障害時の通知用メールアドレスを設定します。
     - vi /etc/aliases で以下を更新
         - # Person who should get root's mail  
@@ -91,7 +92,7 @@ root:           通知用メールアドレス
         - echo test|mail root
     - 指定したメールにテストメールが届いた事を確認
 
-###停止スケジュール設定  
+### 停止スケジュール設定  
 - EC2は時間課金なので、使わない時間帯に自動停止してくれる仕組みを作ります
     - cronインストール
         - yum install crontabs -y
@@ -105,9 +106,9 @@ root:           通知用メールアドレス
         - 例）夜23:00の場合  
             - 00 23 * * * /sbin/shutdown -h now
 
-##LAMP環境構築
+## LAMP環境構築
 
-###レポジトリ追加
+### レポジトリ追加
 - レポジトリとは、インターネット上にあるソフトウェアの倉庫のようなもの
 - 登録しておくことで、より多くの種類、より新しいバージョンのソフトウェアをインストール出来たりします
 - 主要レポジトリインストール(EPEL、REMI、RPMForge)  
@@ -128,7 +129,7 @@ root:           通知用メールアドレス
         - rpm -qa | grep rpmforge-release  
         「rpmforge-release-0.5.3-1.el6.rf.x86_64」が返ってくればOK
 
-###Apacheインストール、設定
+### Apacheインストール、設定
 - yum install httpd -y
 - Apache起動、接続確認
     - service httpd start
@@ -165,7 +166,7 @@ root:           通知用メールアドレス
     - ブラウザから以下接続でテストページが表示されたらOK
         - http://xxx.xxx.xxx.xxx　※IPアドレスを指定
 
-###PHPインストール、設定
+### PHPインストール、設定
 - PHPインストール
     - yum install php php-devel php-mysql php-gd php-mbstring -y --enablerepo=remi
 - 導入バージョン確認
@@ -203,7 +204,7 @@ root:           通知用メールアドレス
             - phpのバージョンや、php使用有無の情報を公開しないようにする
                 - expose_php = On → expose_php = Off
 
-###MySQLインストール、設定
+### MySQLインストール、設定
 - MySQLインストール
     - yum install -y http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
     - yum install -y mysql mysql-devel mysql-server mysql-utilities
@@ -235,8 +236,8 @@ root:           通知用メールアドレス
 - MySQL設定ファイルバックアップ
     - cp /etc/my.cnf /etc/my.cnf.org
 
-##運用ツールインストール
-###dstat（リソース状況確認コマンド）
+## 運用ツールインストール
+### dstat（リソース状況確認コマンド）
 - ロードアベレージ、CPU、Memory、disk、NetWork等を一覧でリアルタイムに見れるので便利。
 - 各種ステータス確認コマンドのまとめ、一括管理のために作られたコマンドらしい
     - yum install dstat
@@ -252,7 +253,7 @@ http://d.hatena.ne.jp/hirose31/20120229/1330501968を参照
             - alias dstat-net='dstat -tlcnd'
 
 
-###logwatch（ログ監視コマンド）
+### logwatch（ログ監視コマンド）
 - 1日のログ監視結果のレポートを/etc/aliasesで指定したrootアカウントメールに送ってくれる
     - logwatchインストール
         - yum install logwatch
@@ -261,7 +262,7 @@ http://d.hatena.ne.jp/hirose31/20120229/1330501968を参照
         - 指定したメールアドレスに送信されているか確認して下さい。
 
 
-##参考URL
+## 参考URL
 - http://d.hatena.ne.jp/knaka20blue/20130821/1377056662
 - http://dev.classmethod.jp/cloud/aws/start_stop_ec2_instances_by_jenkins/
 - http://tweeeety.hateblo.jp/entry/20140211/1392128981

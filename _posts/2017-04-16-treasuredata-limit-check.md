@@ -5,6 +5,7 @@ tags:
 - treasuredata
 ---
 TreasureDataは「ストア出来るのは月間xxxレコード、年間xxxレコードまで」という上限があるかと思いますが、上限超えしていないか確認のため現在使用量を調べてみました。
+  
 <!-- more -->
 
 TreasureDataログイン後の左メニューから「Admin」アイコンをクリック  

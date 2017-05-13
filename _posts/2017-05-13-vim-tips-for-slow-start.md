@@ -4,7 +4,8 @@ title: Vimの起動が遅い時のチェックポイント
 tags: 
 - vim
 ---
-Vim起動が遅い時の原因特定に役立ちました。
+Vim起動が遅い時の原因特定に役立ちました。  
+  
 <!-- more -->
 以下コマンドで所要時間をファイルに書き出す(fooは適当なファイル名でOK）
 > $ vim --startuptime foo
@@ -65,7 +66,7 @@ Vim画面より.vimrcを開いて以下を実行
 56   0.039253 00056: syntax on
 57   0.000220 00057: filetype plugin indent on
 
-##参考
+## 参考
 * http://mattn.kaoriya.net/software/vim/20120315221158.htm
 * http://blog.takuma7.com/blog/2014/01/02/vim-setting/
 

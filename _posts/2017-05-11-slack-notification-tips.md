@@ -5,6 +5,7 @@ tags:
 - slack
 ---
 Slackの通知の基準がよくわからない、なんか夜間通知されていない気がする、、、という方は以下を見てみて下さい。  
+  
 <!-- more -->
 全チャネル共通設定は「Only Direct Messages & Highlight Keyword」(自分宛メッセージ&キーワードのみ)
 確認必須の内容をやりとりするチャネルは「Everything」を設定が良いと思います。  
