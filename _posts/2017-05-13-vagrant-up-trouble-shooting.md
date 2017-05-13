@@ -28,8 +28,8 @@ C:\HashiCorp\Vagrant\localdev>
 - 「xxxxx.vbox-tmp」を「xxxxxx.vbox」にリネーム
 - Virtualboxを再起動
 - Virtualbox上でイメージが「中断」状態で正常認識された事を確認
-- この状態で再度vagrantupを実行
-vanrant upで無事正常起動を確認できました。
+- この状態で再度vagrantupを実行  
+vanrant upで無事正常起動を確認できました!
 >
 C:\HashiCorp\Vagrant\localdev> vagrant up
 Bringing machine 'default' up with 'virtualbox' provider...
