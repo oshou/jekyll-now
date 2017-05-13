@@ -9,8 +9,8 @@ Windows環境でVagrantのVM起動(Vagrant up)でエラーメッセージで起�
 <!-- more -->
 
 ## エラー内容
-vagrant upすると、VMにアクセスできません、という旨のメッセージが出ていました。
-VirtualBox上でもイメージが正常認識されていないようです。
+vagrant upすると、VMにアクセスできません、という旨のメッセージが出ていた。
+VirtualBox上でもイメージが正常認識されていない模様。
 >
 C:\HashiCorp\Vagrant\localdev> vagrant up
 Bringing machine 'default' up with 'virtualbox' provider...
@@ -29,7 +29,7 @@ C:\HashiCorp\Vagrant\localdev>
 - Virtualboxを再起動
 - Virtualbox上でイメージが「中断」状態で正常認識された事を確認
 - この状態で再度vagrantupを実行  
-vanrant upで無事正常起動を確認できました!
+vanrant upで無事正常起動を確認できた!
 >
 C:\HashiCorp\Vagrant\localdev> vagrant up
 Bringing machine 'default' up with 'virtualbox' provider...
@@ -43,6 +43,5 @@ Bringing machine 'default' up with 'virtualbox' provider...
 [default] Waiting for machine to boot. This may take a few minutes...
 
 直前にvagarant halt実行しないまま、うっかりPCシャットダウンしてしまったので、間違いなくそれが原因だと思います。。
-この時、起動時に参照するべきVirtualBox用仮想マシンイメージファイル（.vox）が正常終了していないためにtmpファイルとして別名保存されていたようです。
-
+この時、起動時に参照するべきVirtualBox用仮想マシンイメージファイル（.vox）が正常終了していないためにtmpファイルとして別名保存されていたよう。  
 同様の現象の場合はお試しあれ。
