@@ -24,14 +24,13 @@ C:\HashiCorp\Vagrant\localdev>
 ## 復旧方法
 ここで、対象のVirtualBox用ディレクトリにある仮想マシンイメージファイル（.vox）を確認すると、
 「xxxx.vbox-tmp」という名前に変わっていました。  
-以下手順で変更。
+ここで以下手順を実施。
 - 「xxxxx.vbox-tmp」を「xxxxxx.vbox」にリネーム
 - Virtualboxを再起動
 - Virtualbox上でイメージが「中断」状態で正常認識された事を確認
 - この状態で再度vagrantupを実行
-
-vanrant upで正常起動を確認できました。
------------------------------------------------------------------------
+vanrant upで無事正常起動を確認できました。
+>
 C:\HashiCorp\Vagrant\localdev> vagrant up
 Bringing machine 'default' up with 'virtualbox' provider...
 [default] Clearing any previously set forwarded ports...
@@ -42,7 +41,6 @@ Bringing machine 'default' up with 'virtualbox' provider...
 [default] -- 22 =>  xxxx (adapter 1)
 [default] Booting VM...
 [default] Waiting for machine to boot. This may take a few minutes...
------------------------------------------------------------------------
 
 直前にvagarant halt実行しないまま、うっかりPCシャットダウンしてしまったので、間違いなくそれが原因だと思います。。
 この時、起動時に参照するべきVirtualBox用仮想マシンイメージファイル（.vox）が正常終了していないためにtmpファイルとして別名保存されていたようです。
