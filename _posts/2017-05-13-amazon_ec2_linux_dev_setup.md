@@ -82,7 +82,7 @@ AWSへSSH接続可能になったら以下を実施
 ### メールアドレス設定
 - 障害時の通知用メールアドレスを設定します。
     - vi /etc/aliases で以下を更新
-        - # Person who should get root's mail  
+        - #Person who should get root's mail  
             #root:          marc  
 ↓  
 root:           通知用メールアドレス
