@@ -7,7 +7,8 @@ permalink: /about/
 - 気になるテーマはLinux, Docker, Vagrant, Ansible, Ruby, RazberryPi
 - OSカーネル周りの知見をもっと増やしたい...
 
-Contact me
+### Contact me
 [adf1985adf@gmail.com](mailto:adf1985adf@gmail.com)
-  
-  
+　
+　  
+　  
