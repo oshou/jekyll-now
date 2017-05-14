@@ -54,7 +54,7 @@ tags:
 - イメージテンプレート(DockerImage)を元にコンテナ作成
   - docker run -it イメージ名
 
-## Docker運用時のガイドライン
+## Docker運用のポイント
 コンテナは素早く柔軟にスケールできるようにするために、ユーザーデータを持たせずいつでも使い捨てられる環境を保つ。  
 そのために以下の方針が必要。
 
@@ -116,9 +116,8 @@ tags:
 - イメージのビルド(Dockerfile必須)
   - docker build -t イメージ名 Dockerfile配置フォルダ
 - イメージの削除
-  - docker build -t イメージ名 Dockerfile配置フォルダ
+  - docker rmi イメージ名
   - 強制削除する場合は「-f」をつける。
-  - 複数イメージまとめて削除は「docker rmi -f `sudo docker images`」
 
 ### コンテナ関連
 - コンテナの生成
