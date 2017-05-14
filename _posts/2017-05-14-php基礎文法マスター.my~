@@ -14,9 +14,6 @@ tags:
 - 標準ライブラリが充実
 - 下位互換がしっかりしている
 - WikipediaやFacebook等大手でも利用実績あり
-- PHP7になっての変更点
-  - PHP5.6からPHP6を通り越してPHP7となった。
-  - 型を厳格に扱えるようになった。
 - PHPの歴史
   - http://php.net/manual/ja/history.php.php
 
