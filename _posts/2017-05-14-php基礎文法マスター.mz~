@@ -116,14 +116,12 @@ echo $number;
 
 ## コメント
 - 単一行は//、複数行は/* ～ */で指定
-
 ```
 //ここから1行はコメントです。
 /* ここから閉じるまでは何行でもコメントです。 */
 ```
 
 ## 出力
-
 ```
 echo("hoge")      #Rubyで言うprint "hoge"
 echo("hoge\n"     #Rubyで言うputs "hoge"
@@ -131,7 +129,6 @@ var_dump("hoge")  #Rubyで言う p "hoge"
 ```
 
 ## 代入演算子
-
 ```
 $calc += 1   #$calc = $calc + 1;
 $calc -= 1   #$calc = $calc - 1;
@@ -140,7 +137,6 @@ $calc /= 1   #$calc = $calc / 1;
 ```
 
 ## 比較演算子
-
 ```
 //値の一致
 if ($string == "test")
@@ -155,61 +151,39 @@ if ($string === "test")
 ```
 
 ## インクリメント(加算子)、デクリメント(減算子)
-
 ```
 $number++、++$number
 $number--、--$number
 ```
+- $number++、++$number
 
 ## 文字列
 - ※Stringライブラリ一覧
   - http://php.net/manual/ja/book.strings.php
 - 結合(.)
-
 ```
-"ketsugou"."dekita";
-# -->'ketsugoudekita'
+"ketsugou"."dekita";   # //'ketsugoudekita'
 ```
 
 - 分割(split)
-
 ```
-split("," , "bunkatu, dekita?"); 
-# -->array( 0=> 'bunkatsu',1=>'dekita?')
+split("," , "bunkatu, dekita?");    array( 0=> 'bunkatsu',1=>'dekita?')
 ```
 
 - 文字の長さ(strlen)
-
 ```
-strlen("mojinonagasa-ha?");
-# -->16
+strlen("mojinonagasa-ha?"); #16
 ```
 
 - 検索(文字列内に特定文字列を含む場合の開始位置）
-
-```
-strpos("abcd","bc");
-# -->1
-```
-
+  - strpos("abcd","bc"); #1
 - 文字一部切出し(substr)
-
-```
-substr("abcd",0,2);    #ab
-```
-
+  - substr("abcd",0,2);    #ab
 - 配列の各要素の値で特定キーと一致するものがあれば置換
-
-```
-str_replace('abcde','12345',$str)
-strtr('abcde','12345',$str)
-```
-
+  - str_replace('abcde','12345',$str)
+  - strtr('abcde','12345',$str)
 - エスケープ処理
-
-```
-htmlspecialchars($string,ENT_QUOTES,'UTF-8');
-```
+  - htmlspecialchars($string,ENT_QUOTES,'UTF-8');
 
 ## 配列
 - 基本
