@@ -44,7 +44,7 @@ $ mysql> drop database DB名;
 $ Query OK, 0 rows affected (0.13 sec)
 ※show databasesで消えている事を確認。
 
-### 使用するDBの切替
+### 使用するDBの指定
 $ mysql> use DB名  
 以下メッセージが出たらok。
 Database changed
@@ -106,11 +106,15 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 ### 登録済ユーザー一覧と権限情報
 $ mysql> select host,user from mysql.user;
 
-### 接続ユーザー一覧の確認
+### アクティブなプロセス一覧
 $ mysql> show processlist;
+$ mysql> show full processlist;
+
+### 現在の状態の確認
+$ mysql> show global status;
 
 ### 各種設定確認
-$ mysql> show variables;  
+$ mysql> show global variables;  
 絞り込み表示したい場合は以下  
 $ mysql> show variables like 'キーワード'  
 キーワード内は%をつけることでアスタリスク的な使い方が出来る  
@@ -156,3 +160,13 @@ $ mysql> select
 
 ### 特定DBのリストア
 - mysqldump -u'ユーザー名' -p'パスワード' DB名 < backup.sql
+
+## レプリケーション
+### マスター稼働状況
+- $ mysql> show master status \G
+### スレーブ稼働状況
+- $ mysql> show slave status \G
+
+## 参考
+- MySQL 運用時に便利なコマンド
+  - https://www.qoosky.io/techs/3a369dd466
