@@ -103,6 +103,9 @@ $ mysql -V
 以下のような画面が表示されたらok  
 $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 
+### 登録済ユーザー一覧と権限情報
+$ mysql> select host,user from mysql.user;
+
 ### 接続ユーザー一覧の確認
 $ mysql> show processlist;
 
