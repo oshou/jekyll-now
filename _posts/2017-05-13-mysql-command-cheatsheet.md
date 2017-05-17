@@ -20,19 +20,10 @@ $ mysql -u'ユーザー名' -p'パスワード' DB名 > output.sql (特定ユー
 ### MySQLログアウト
 $ mysql> exit;
 
-### 接続ユーザー一覧の確認
-$ mysql> show processlist;
-
 ### 初期ログイン時パスワードセット
 $ mysql> set password for 'ユーザ名'@'接続元ホスト'=password('パスワード');  
 以下メッセージが出たらok。  
 Query OK, 0 rows affected (0.07 sec)
-
-### MySQLデフォルト文字コード設定確認
-$ mysql> show variables like 'character_set%';
-
-### MySQLプラグイン一覧確認
-$ mysql> show plugins;
 
 
 ## DB操作
@@ -109,15 +100,23 @@ $ mysql> update table set (field1=1) where (field2=4);
 ## 設定情報確認
 ### MySQLバージョン確認
 $ mysql -V  
-以下のような画面が表示されたらok    
+以下のような画面が表示されたらok  
 $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
+
+### 接続ユーザー一覧の確認
+$ mysql> show processlist;
 
 ### 各種設定確認
 $ mysql> show variables;  
-絞り込み表示したい場合は以下
-$ mysql> show variables like 'キーワード'
-キーワード内は%をつけることでアスタリスク的な使い方が出来る
-$ mysql> show variables like '%character%'
+絞り込み表示したい場合は以下  
+$ mysql> show variables like 'キーワード'  
+キーワード内は%をつけることでアスタリスク的な使い方が出来る  
+$ mysql> show variables like '%character%'  
+- MySQLデフォルト文字コード設定確認
+$ mysql> show variables like 'character_set%';
+
+### MySQLプラグイン一覧確認
+$ mysql> show plugins;
 
 ### メモリ設定確認用SQL
 ```
