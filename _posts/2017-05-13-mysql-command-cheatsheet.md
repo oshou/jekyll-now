@@ -31,22 +31,22 @@ Query OK, 0 rows affected (0.07 sec)
 $ mysql> show databases;
 
 ### 作成済DBの文字コード情報確認
-$ mysql> show create database DB名
+$ mysql> show create database DB名;
 
 ### DB作成
-$ mysql> create database DB名;
-以下メッセージが出たらok
+$ mysql> create database DB名;  
+以下メッセージが出たらok  
 $ Query OK, 1 row affected (0.00 sec)
 
 ### DB削除
-$ mysql> drop database DB名;
-以下メッセージが出たらok。
-$ Query OK, 0 rows affected (0.13 sec)
+$ mysql> drop database DB名;  
+以下メッセージが出たらok。  
+$ Query OK, 0 rows affected (0.13 sec)  
 ※show databasesで消えている事を確認。
 
 ### 使用するDBの指定
-$ mysql> use DB名  
-以下メッセージが出たらok。
+$ mysql> use DB名;  
+以下メッセージが出たらok。  
 Database changed
 
 ### 指定したDBへの特定ユーザーの権限付与
@@ -60,15 +60,15 @@ $ mysql> show tables;
 $ mysql> show create table テーブル名;
 
 ### テーブル定義の確認
-$ mysql> desc テーブル名;
+$ mysql> desc テーブル名;  
 ※descはdescriptionの略
 
 ### テーブル作成
-$ mysql> create table テーブル名;
-    -> (
-    -> id INT(10),
-    -> name VARCHAR(30)
-    -> );
+$ mysql> create table テーブル名;  
+    -> (  
+    -> id INT(10),  
+    -> name VARCHAR(30)  
+    -> );  
 $ Query OK, 0 rows affected (0.09 sec)
 
 - テーブル削除
@@ -78,24 +78,20 @@ $ mysql> drop table テーブル名;
 $ mysql> select * from テーブル名;
 
 ### テーブルの中身の追加
-$ mysql> insert into テーブル名 フィールド名 values フィールドの値;
-例）
-$ mysql> insert into table (field1,field2,field3) values (value1,value2,value3);
+$ mysql> insert into テーブル名 フィールド名 values フィールドの値;  
+例) $ mysql> insert into table (field1,field2,field3) values (value1,value2,value3);
 
 ### テーブルの中身の削除
-$ mysql> delete from テーブル名 where 条件文;
-例）
-$ mysql> delete from table1 where id=3;
+$ mysql> delete from テーブル名 where 条件文;  
+例) $ mysql> delete from table1 where id=3;
 
 ### テーブルの中身の全消去
-$ mysql> truncate テーブル名;
-例）
-$ mysql> truncate table1;
+$ mysql> truncate テーブル名;  
+例) $ mysql> truncate table1;
 
 ### テーブルの中身の更新
-$ mysql> update テーブル名 set フィールド名 where 条件;
-例）
-$ mysql> update table set (field1=1) where (field2=4);
+$ mysql> update テーブル名 set フィールド名 where 条件;  
+例) $ mysql> update table set (field1=1) where (field2=4);
 
 ## 設定情報確認
 ### MySQLバージョン確認
@@ -107,7 +103,7 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 $ mysql> select host,user from mysql.user;
 
 ### アクティブなプロセス一覧
-$ mysql> show processlist;
+$ mysql> show processlist;  
 $ mysql> show full processlist;
 
 ### 現在の状態の確認
@@ -119,7 +115,7 @@ $ mysql> show global variables;
 $ mysql> show variables like 'キーワード'  
 キーワード内は%をつけることでアスタリスク的な使い方が出来る  
 $ mysql> show variables like '%character%'  
-- MySQLデフォルト文字コード設定確認
+- MySQLデフォルト文字コード設定確認  
 $ mysql> show variables like 'character_set%';
 
 ### MySQLプラグイン一覧確認
@@ -149,9 +145,9 @@ $ mysql> select
 - mysqldump -u'ユーザー名' -p'パスワード' DB名 > backup.sql
 
 ### 実行時にエラーが出た場合
-以下エラーが出た場合はmy.cnfを修正
-「mysqldump: unknown variable 'symbolic-links=0'」
-変更箇所
+以下エラーが出た場合はmy.cnfを修正  
+「mysqldump: unknown variable 'symbolic-links=0'」  
+変更箇所  
 - MySQLの設定ファイル「my.cnf」にて「symbolic-links」をコメントアウト
 
 ## リストア
@@ -164,6 +160,7 @@ $ mysql> select
 ## レプリケーション
 ### マスター稼働状況
 - $ mysql> show master status \G
+
 ### スレーブ稼働状況
 - $ mysql> show slave status \G
 
