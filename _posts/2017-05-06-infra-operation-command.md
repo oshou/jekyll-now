@@ -46,6 +46,8 @@ tags:
 - IP情報の確認
   - $ ifconfig
   - $ ip addr show
+- ルーティングテーブルの情報確認
+  - $ netstat -rn
 
 ## パフォーマンス
 **とりあえずvmstat覚えておく。可能ならdstatをインストールする**

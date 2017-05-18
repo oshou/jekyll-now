@@ -25,6 +25,13 @@ $ mysql> set password for 'ユーザ名'@'接続元ホスト'=password('パス�
 以下メッセージが出たらok。  
 Query OK, 0 rows affected (0.07 sec)
 
+## ユーザー操作
+### ユーザー毎の権限情報確認
+$ mysql> show grants for 'ユーザー名'@'接続元ホスト';
+
+### ユーザー削除
+$ mysql> drop user 'ユーザー名'@'接続元ホスト';
+
 
 ## DB操作
 ### 作成済DBの一覧表示
