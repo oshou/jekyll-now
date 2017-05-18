@@ -25,9 +25,57 @@ $ mysql> set password for 'ユーザ名'@'接続元ホスト'=password('パス�
 以下メッセージが出たらok。  
 Query OK, 0 rows affected (0.07 sec)
 
+## 設定情報確認
+### MySQLバージョン確認
+**$ mysql -V**  
+以下のような画面が表示されたらok  
+$ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
+
+### 登録済ユーザー一覧と権限情報
+**$ mysql> select host,user from mysql.user;**
+
+### アクティブなプロセス一覧
+**$ mysql> show full processlist;**
+
+### 各種設定確認
+**$ mysql> show global variables;**  
+絞り込み表示したい場合は以下  
+$ mysql> show variables like 'キーワード'  
+キーワード内は%をつけることでアスタリスク的な使い方が出来る  
+$ mysql> show variables like '%character%'  
+- MySQLデフォルト文字コード設定確認  
+$ mysql> show variables like 'character_set%';
+
+### 現在の状態の確認
+**$ mysql> show global status;**
+
+### MySQLプラグイン一覧確認
+**$ mysql> show plugins;**
+
+### メモリ設定確認用SQL
+```
+$ mysql> 
+select
+@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH as GLOBAL_BUFFER_SIZE,
+@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE as THREAD_BUFFER_SIZE,
+@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH
+ + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS AS TOTAL_MEMORY_SIZE,
+(@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH
+ + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024 AS TOTAL_MEMORY_SIZE_kb,
+(@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH
+ + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024 AS TOTAL_MEMORY_SIZE_mb,
+(@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH
+ + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024/1024 AS TOTAL_MEMORY_SIZE_gb
+\G
+```
+
 ## ユーザー操作
 ### ユーザー毎の権限情報確認
 $ mysql> show grants for 'ユーザー名'@'接続元ホスト';
+
+### ユーザー作成
+
+$ mysql> create user 'ユーザー名'@'接続元ホスト' IDENTIFIED BY 'パスワード';
 
 ### ユーザー削除
 $ mysql> drop user 'ユーザー名'@'接続元ホスト';
@@ -100,49 +148,6 @@ $ mysql> truncate テーブル名;
 $ mysql> update テーブル名 set フィールド名 where 条件;  
 例) $ mysql> update table set (field1=1) where (field2=4);
 
-## 設定情報確認
-### MySQLバージョン確認
-$ mysql -V  
-以下のような画面が表示されたらok  
-$ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
-
-### 登録済ユーザー一覧と権限情報
-$ mysql> select host,user from mysql.user;
-
-### アクティブなプロセス一覧
-$ mysql> show processlist;  
-$ mysql> show full processlist;
-
-### 現在の状態の確認
-$ mysql> show global status;
-
-### 各種設定確認
-$ mysql> show global variables;  
-絞り込み表示したい場合は以下  
-$ mysql> show variables like 'キーワード'  
-キーワード内は%をつけることでアスタリスク的な使い方が出来る  
-$ mysql> show variables like '%character%'  
-- MySQLデフォルト文字コード設定確認  
-$ mysql> show variables like 'character_set%';
-
-### MySQLプラグイン一覧確認
-$ mysql> show plugins;
-
-### メモリ設定確認用SQL
-```
-$ mysql> select
-@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH as GLOBAL_BUFFER_SIZE,
-@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE as THREAD_BUFFER_SIZE,
-@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH
- + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS AS TOTAL_MEMORY_SIZE,
-(@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH
- + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024 AS TOTAL_MEMORY_SIZE_kb,
-(@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH
- + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024 AS TOTAL_MEMORY_SIZE_mb,
-(@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.INNODB_ADDITIONAL_MEM_POOL_SIZE + @@GLOBAL.NET_BUFFER_LENGTH
- + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024/1024 AS TOTAL_MEMORY_SIZE_gb
-\G
-```
 
 ## バックアップ
 ### 全DBのバックアップ
