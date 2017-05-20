@@ -74,7 +74,6 @@ select
 $ mysql> show grants for 'ユーザー名'@'接続元ホスト';
 
 ### ユーザー作成
-
 $ mysql> create user 'ユーザー名'@'接続元ホスト' IDENTIFIED BY 'パスワード';
 
 ### ユーザー削除
@@ -85,7 +84,7 @@ $ mysql> drop user 'ユーザー名'@'接続元ホスト';
 ### 作成済DBの一覧表示
 $ mysql> show databases;
 
-### 作成済DBの文字コード情報確認
+### 作成済DBの作成用SQL出力(文字コードを確認)
 $ mysql> show create database DB名;
 
 ### DB作成
@@ -111,7 +110,7 @@ $ mysql> grant all on DB名.テーブル名 to 'ユーザー名';
 ### 作成済テーブルの一覧表示
 $ mysql> show tables;
 
-### 作成済テーブルの文字コード情報確認
+### 作成済テーブルの作成用SQL出力(文字コードを確認)
 $ mysql> show create table テーブル名;
 
 ### テーブル定義の確認
@@ -151,10 +150,16 @@ $ mysql> update テーブル名 set フィールド名 where 条件;
 
 ## バックアップ
 ### 全DBのバックアップ
-- mysqldump -u'ユーザー名' -p'パスワード' --all-databases > backup.sql
+- データ + 定義情報
+  - mysqldump -u'ユーザー名' -p'パスワード' --all-databases > backup.sql
+- 定義情報のみ
+  - mysqldump -u'ユーザー名' -p'パスワード' -d --all-databases > backup.sql
 
 ### 特定DBのバックアップ
-- mysqldump -u'ユーザー名' -p'パスワード' DB名 > backup.sql
+- データ + 定義情報
+  - mysqldump -u'ユーザー名' -p'パスワード' DB名 > backup.sql
+- 定義情報のみ
+  - mysqldump -u'ユーザー名' -p'パスワード' -d DB名 > backup.sql
 
 ### 実行時にエラーが出た場合
 以下エラーが出た場合はmy.cnfを修正  
@@ -179,3 +184,5 @@ $ mysql> update テーブル名 set フィールド名 where 条件;
 ## 参考
 - MySQL 運用時に便利なコマンド
   - https://www.qoosky.io/techs/3a369dd466
+- mysqldumpまとめ
+  - http://qiita.com/PlanetMeron/items/3a41e14607a65bc9b60c
