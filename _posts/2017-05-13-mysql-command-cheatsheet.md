@@ -10,6 +10,15 @@ tags:
 <!-- more -->
 先頭に「mysql> 」が付いたものはmysqlログイン後、ついていないものはログイン前に実施する。
   
+## 基本情報
+MySQLにはデフォルトで以下DBが用意されている。
+- information_schema
+  - MySQL関連のメタデータを一元管理するDB
+- performance_schema
+  - パフォーマンス関連のデータを一元管理するDB
+- sys
+  -  performance_schemaやinformation_schemaの情報を見やすくするためのビュー、ストアドプロシージャまとめ
+- mysql
 
 ## 基本操作
 ### MySQLログイン
@@ -21,7 +30,7 @@ $ mysql -u'ユーザー名' -p'パスワード' DB名 > output.sql (特定ユー
 $ mysql> exit;
 
 ### 初期ログイン時パスワードセット
-$ mysql> set password for 'ユーザ名'@'接続元ホスト'=password('パスワード');  
+$ mysql> set password for 'ユーザ名'@'接続元ホスト'='パスワード';  
 以下メッセージが出たらok。  
 Query OK, 0 rows affected (0.07 sec)
 
@@ -31,26 +40,44 @@ Query OK, 0 rows affected (0.07 sec)
 以下のような画面が表示されたらok  
 $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 
-### 登録済ユーザー一覧と権限情報
+### 登録済ユーザー一覧
 **$ mysql> select host,user from mysql.user;**
+
+### 登録済ユーザーの権限情報一覧
+- グローバルレベルの権限情報一覧
+**$ mysql> select * from information_schema.user_privileges;**
+- DBスキーマレベルの権限情報一覧
+**$ mysql> select * from information_schema.schema_privileges;**
+- テーブルレベルの権限情報一覧
+**$ mysql> select * from information_schema.table_privileges;**
+- カラムレベルの権限情報一覧
+**$ mysql> select * from information_schema.column_privileges;**
 
 ### アクティブなプロセス一覧
 **$ mysql> show full processlist;**
 
-### 各種設定確認
+### 各種環境変数の確認
+- **MySQLで扱う環境変数は以下2種類がある。
+  - セッション変数：一時設定。現在の接続だけが影響する。
+  - グローバル変数：恒久設定。変数設定後のすべての接続が影響する。
 **$ mysql> show global variables;**  
+**$ mysql> show session variables;**  
 絞り込み表示したい場合は以下  
 $ mysql> show variables like 'キーワード'  
 キーワード内は%をつけることでアスタリスク的な使い方が出来る  
-$ mysql> show variables like '%character%'  
-- MySQLデフォルト文字コード設定確認  
-$ mysql> show variables like 'character_set%';
+$ mysql> show variables like '%character_set%'  
 
-### 現在の状態の確認
+### 現在の状態確認
 **$ mysql> show global status;**
+
+### 現在のINNODBの状態確認
+**$ mysql> show engine innodb status;**
 
 ### MySQLプラグイン一覧確認
 **$ mysql> show plugins;**
+
+### エラー一覧
+**$ mysql> show warnings;**
 
 ### メモリ設定確認用SQL
 ```
