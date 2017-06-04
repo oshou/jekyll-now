@@ -51,10 +51,12 @@ Query OK, 0 rows affected (0.07 sec)
 以下のような画面が表示されたらok  
 $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 
-### 登録済ユーザー一覧
-**$ mysql> select host,user from mysql.user;**
+### アクティブプロセス一覧
+**$ mysql> show full processlist;**
 
-### 登録済ユーザーの権限情報一覧
+### 登録済ユーザー・権限一覧
+- 登録済ユーザー一覧
+**$ mysql> select host,user from mysql.user;**
 - グローバルレベルの権限情報一覧
 **$ mysql> select * from information_schema.user_privileges;**
 - DBスキーマレベルの権限情報一覧
@@ -63,9 +65,6 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 **$ mysql> select * from information_schema.table_privileges;**
 - カラムレベルの権限情報一覧
 **$ mysql> select * from information_schema.column_privileges;**
-
-### アクティブなプロセス一覧
-**$ mysql> show full processlist;**
 
 ### 各種環境変数の確認
 - **MySQLで扱う環境変数は以下2種類がある。
@@ -108,14 +107,17 @@ select
 ```
 
 ## ユーザー操作
-### ユーザー毎の権限情報確認
-$ mysql> show grants for 'ユーザー名'@'接続元ホスト';
-
 ### ユーザー作成
 $ mysql> create user 'ユーザー名'@'接続元ホスト' IDENTIFIED BY 'パスワード';
 
 ### ユーザー削除
 $ mysql> drop user 'ユーザー名'@'接続元ホスト';
+
+### ユーザー毎の権限情報確認
+$ mysql> show grants for 'ユーザー名'@'接続元ホスト';
+
+### ユーザー毎の権限情報確認
+$ mysql> grant all privileges on [DB2名].[テーブル名] to 'ユーザー名'@'接続元ホスト' WITH GRANT OPTION;
 
 
 ## DB操作

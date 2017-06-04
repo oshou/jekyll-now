@@ -11,25 +11,25 @@ tags:
 
 ## ユーザー関連
 - ユーザー一覧の確認、編集
-  - **$ vipw**
+  - $ vipw
 - グループ一覧の確認、編集
-  - **$ vigr**
+  - $ vigr
 - 現在ログイン中のユーザー一覧
-  - **$ w**
+  - $ w
 - ログイン失敗履歴
-  - **$ lastb**
+  - $ lastb
 - ログイン成功履歴
-  - **$ last**
+  - $ last
 
 ## プロセス関連
-- プロセス一覧
-  - $ **ps auxww**
 - リソース使用率上位のプロセス一覧
-  - **$ top**
+  - $ top
   - オプションzx押してからShift+< or Shift+>で項目ごとに降順ソート可能。
   - オプション-fで表示項目を選択可能。
 - ディスクIO使用率上位のプロセス一覧
   - $ iotop
+- プロセス一覧
+  - $ ps auxww
 - プロセスが開いているファイルの特定
   - $ lsof -p `pgrep プロセス名`
   - $ ls -l /proc/プロセスID/fd
@@ -47,39 +47,33 @@ tags:
   - http://eno0514.hatenadiary.jp/entry/20150622/1434905054
 
 ## ファイル操作
-- ファイル内容の編集
-  - **$ vim**
-- ファイル内容の表示
-  - **$ less**
 - ファイルの場所検索
   - $ locate ファイル名
+- ファイル内容の編集
+  - $ vim
+- ファイル内容の表示
+  - $ less
 - ファイル比較
   - $ diff {ファイル名1} {ファイル名2}
   - $ diff -r {ディレクトリパス1} {ディレクトリパス2}
-- ファイル文字コード表示、変更
-  - $ vimで開いて「:set fenc?」       //確認の場合
-  - $ vimで開いて「:set fenc=utf-8」  //変更の場合
-- 改行コード表示、変更
-  - $ vimで開いて「:set ff?」         //確認の場合
-  - $ vimで開いて「:set ff=unix」     //変更の場合
+- ファイル文字コード確認
+  - vimで開いて「:set fenc?」
+  - $ vimで開いて「:set fenc=utf-8」
+- ファイル文字コード変更
 
 ## ネットワーク
 - IP情報の確認
-  - **$ ip a**
+  - $ ip a
   - $ ifconfig
-- 通信状況
-  - **$ netstat -pantu**
 - ポート疎通確認
   - $ curl -v telnet://<ip address>:<port num>
 - ルーティングテーブルの情報確認
   - $ netstat -rn
 - パケットキャプチャ
-  - **$ tcpdump -n -i ethxx**  //基本セット
+  - $ tcpdump -n -i ethxx  //基本セット
   - $ tcpdump -n -i ethxx port xx  //port指定
   - $ tcpdump -n -i ethxx host xxx.xxx.xxx.xxx  //IP指定
   - $ tcpdump -n -i ethxx src host xxx.xxx.xxx.xxx  //フィルタリング対象を送信元に限定
-  - Flagsの意味
-    - .(ACK) / S(SYN) / F(FIN) / P(PUSH) / R(RST) / U(URG) / W(ECN CWR) / E(ECN-Echo)
 
 ## cron関連
 - 全ユーザーが持つcron一覧
@@ -96,9 +90,8 @@ tags:
 負荷の高いプロセスの特定はtop、iotop。**
 
 ### システム全体の負荷(リアルタイム)
-- **dstat**
-  - **$ dstat -tlcmsdrn**
 - **$ vmstat 2**
+- vmstatの見方
   - procs
     - r: 実行可能なプロセス数
     - b: 不可避なIO待ちプロセス数
@@ -124,7 +117,7 @@ tags:
     - st: 仮想マシンに盗まれた(steal)時間
 
 ### システム全体の負荷(過去履歴)
-- **$ sar**
+- $ sar
   - ロードアベレージ
     - sar -q
   - メモリ使用状況
