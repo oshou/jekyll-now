@@ -23,7 +23,7 @@ tags:
 
 ## プロセス関連
 - プロセス一覧
-  - $ **ps auxww**
+  - **$ ps auxww**
 - リソース使用率上位のプロセス一覧
   - **$ top**
   - オプションzx押してからShift+< or Shift+>で項目ごとに降順ソート可能。
@@ -31,8 +31,12 @@ tags:
 - ディスクIO使用率上位のプロセス一覧
   - $ iotop
 - プロセスが開いているファイルの特定
-  - $ lsof -p `pgrep プロセス名`
-  - $ ls -l /proc/プロセスID/fd
+  - **$ lsof -p `pgrep プロセス名`**
+  - **$ ls -l /proc/プロセスID/fd**
+- プロセスの強制停止
+  - $ kill -SIGKILL [PID]
+- プロセスの再起動
+  - $ kill -SIGHUP [PID]
 - プロセスの退勤時かけ流し実行(実行前の場合)
   - nohup コマンド & 
 - プロセスの退勤時かけ流し実行(既に実行中の場合)
@@ -43,7 +47,7 @@ tags:
 
 ## カーネル関連
 - カーネルパラメータ一覧
-  - $ sysctl -a
+  - **$ sysctl -a**
   - http://eno0514.hatenadiary.jp/entry/20150622/1434905054
 
 ## ファイル操作
@@ -64,22 +68,28 @@ tags:
   - $ vimで開いて「:set ff=unix」     //変更の場合
 
 ## ネットワーク
-- IP情報の確認
+- IP割当状況
   - **$ ip a**
-  - $ ifconfig
+  - **$ ifconfig**
 - 通信状況
   - **$ netstat -pantu**
 - ポート疎通確認
-  - $ curl -v telnet://<ip address>:<port num>
+  - **$ curl -v telnet://<ip address>:<port num>**
+- パケットキャプチャ
+  - **$ tcpdump -nn -i ethxx**  //基本セット
+  - **$ tcpdump -nn -i ethxx icmp** //ICMPパケットのフィルタ
+  - **$ tcpdump -nn -i ethxx port xx**  //port指定
+  - **$ tcpdump -nn -i ethxx host xxx.xxx.xxx.xxx**  //特定ホストを抽出
+  - **$ tcpdump -nn -i ethxx src host xxx.xxx.xxx.xxx**  //特定ホストを除外
+  - Flagsの意味
+    - **.(ACK) / S(SYN) / F(FIN) / P(PUSH) / R(RST) / U(URG) / W(ECN CWR) / E(ECN-Echo)**
+  - 基本的なパターン
+    - TCPコネクション開始 --> (CLI). -> (SRV)S. -> (CLI). //3-way handshake
+    - TCPコネクション切断 --> (CLI)F. -> (SRV)F. -> (CLI).
 - ルーティングテーブルの情報確認
   - $ netstat -rn
-- パケットキャプチャ
-  - **$ tcpdump -n -i ethxx**  //基本セット
-  - $ tcpdump -n -i ethxx port xx  //port指定
-  - $ tcpdump -n -i ethxx host xxx.xxx.xxx.xxx  //IP指定
-  - $ tcpdump -n -i ethxx src host xxx.xxx.xxx.xxx  //フィルタリング対象を送信元に限定
-  - Flagsの意味
-    - .(ACK) / S(SYN) / F(FIN) / P(PUSH) / R(RST) / U(URG) / W(ECN CWR) / E(ECN-Echo)
+- IP別接続数の確認
+  - $ netstat -pantu | awk '{print $4}' | cut -d":" -f1 | sort | uniq -c | sort -rn
 
 ## cron関連
 - 全ユーザーが持つcron一覧
@@ -88,7 +98,7 @@ tags:
   - $ cat /var/spool/cron/ユーザー名
 
 ## 名前解決関連
-- $ dig
+- **$ dig [ドメイン名] @[ネームサーバー名]**
 
 ## パフォーマンス
 **リアルタイム負荷は何はなくともvmstat。出来ればdstatをインストール。  
@@ -138,7 +148,6 @@ tags:
 
 
 ### これだけは入れておきたいツールまとめ
-- dstat
 - tcpdump
 - fio
 
