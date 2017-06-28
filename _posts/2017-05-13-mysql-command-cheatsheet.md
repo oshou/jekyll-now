@@ -89,6 +89,12 @@ $ mysql> show variables like '%character_set%'
 ### エラー一覧
 **$ mysql> show warnings;**
 
+### 過去の最大コネクション数
+**$ mysql> show status like '%Max_used%';
+
+### 現在のコネクション数
+**$ mysql> show status like '%Threads_connected%';
+
 ### メモリ設定確認用SQL
 **こちらでかなり整理してまとめて頂いていたのでリンク**
 **http://masato.ushio.org/blog/index.php/2015/12/31/uco-tech_mysql-memory-usage/**
@@ -241,7 +247,13 @@ select
  (@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.NET_BUFFER_LENGTH + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024 AS TOTAL_MEMORY_SIZE_mb,
  (@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.NET_BUFFER_LENGTH + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024/1024 AS TOTAL_MEMORY_SIZE_gb
  \G
-  - 
+
+## パフォーマンス
+- global buffer
+  - innodb_buffer_pool_size(80%程度), myisam_key_size(25%程度)で用途に応じて設定できているか
+- thread_cache_size = max_connections/3になっているか
+  - Treads_createdが目安
+
 
 ## 参考
 - MySQL 運用時に便利なコマンド

@@ -75,7 +75,10 @@ tags:
   - **$ netstat -pantu**
 - ポート疎通確認
   - **$ curl -v telnet://<ip address>:<port num>**
-- パケットキャプチャ
+- 通信経路確認
+  - **$ traceroute -nI [ip address]** //ICMPの場合
+  - **$ traceroute -nT -p [ポート番号] [ip address]** //ICMPの場合
+- **パケットキャプチャ**
   - **$ tcpdump -nn -i ethxx**  //基本セット
   - **$ tcpdump -nn -i ethxx icmp** //ICMPパケットのフィルタ
   - **$ tcpdump -nn -i ethxx port xx**  //port指定
@@ -83,7 +86,8 @@ tags:
   - **$ tcpdump -nn -i ethxx src host xxx.xxx.xxx.xxx**  //特定ホストを除外
   - Flagsの意味
     - **.(ACK) / S(SYN) / F(FIN) / P(PUSH) / R(RST) / U(URG) / W(ECN CWR) / E(ECN-Echo)**
-  - 基本的なパターン
+  - 基本的なパターン  
+    - http://d.hatena.ne.jp/nattou_curry_2/20090822/1250931250
     - TCPコネクション開始 --> (CLI). -> (SRV)S. -> (CLI). //3-way handshake
     - TCPコネクション切断 --> (CLI)F. -> (SRV)F. -> (CLI).
 - ルーティングテーブルの情報確認
