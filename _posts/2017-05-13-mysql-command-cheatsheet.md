@@ -190,8 +190,11 @@ $ mysql> truncate テーブル名;
 
 ### テーブルの中身の更新
 $ mysql> update テーブル名 set フィールド名 where 条件;  
-例) $ mysql> update table set (field1=1) where (field2=4);
+例) $ mysql> update table1 set (field1=1) where (field2=4);
 
+### テーブルの最適化
+$ mysql> analize table テーブル名;
+例) $ mysql> analize table table1;
 
 ## バックアップ
 ### 全DBのバックアップ
@@ -229,8 +232,13 @@ $ mysql> update テーブル名 set フィールド名 where 条件;
 ## 運用のポイント
 - 接続時の不要なDNS問い合わせを避ける
   - /etc/my.cnfにskip-name-resolveオプションをつけよう
-- EXPLAINで実行計画を立ててクエリを最適化しよう
-  - 必ずクエリ側でWHERE句による対象絞り込みをし、全件フェッチを避けよう。
+- キャッシュサイズは適切か?
+  - ヒット率が6割を下回るようであれば見直しをしたほうが良いかもしれません。
+  - http://qiita.com/muran001/items/14f19959d4723ffc29cc
+  - クエリキャッシュヒット率
+  　- ＝キャッシュヒット数 / クエリ発行総数
+  　- ＝キャッシュヒット数 / (キャッシュヒット数＋キャッシュミス数)
+  　- ＝Qcache_hits / ( Qcache_hit + Com_select)　
 - メモリサイジングを適切にしよう
   - MySQLのメモリは、サーバ全体で使用する「GlobalBuffer」と、各接続毎に確保される「ThreadBuffer」の2種類がある。
   - **全体のメモリ容量 > GlobalBuffer一式 + (max_connections * ThreadBuffer一式)に収まるようにする。**
@@ -247,6 +255,8 @@ select
  (@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.NET_BUFFER_LENGTH + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024 AS TOTAL_MEMORY_SIZE_mb,
  (@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.NET_BUFFER_LENGTH + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024/1024 AS TOTAL_MEMORY_SIZE_gb
  \G
+- EXPLAINで実行計画を立ててクエリを最適化しよう
+  - 必ずクエリ側でWHERE句による対象絞り込みをし、全件フェッチを避けよう。
 
 ## パフォーマンス
 - global buffer
