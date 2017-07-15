@@ -16,6 +16,9 @@ tags:
   - **$ vigr**
 - 現在ログイン中のユーザー一覧
   - **$ w**
+- ユーザーのパスワードロック
+  - **$ passwd -l ユーザー名** //ロック操作
+  - **$ passwd -S ユーザー名** //ロック済確認
 - ログイン失敗履歴
   - **$ lastb**
 - ログイン成功履歴
@@ -41,8 +44,9 @@ tags:
   - nohup コマンド & 
 - プロセスの退勤時かけ流し実行(既に実行中の場合)
   - Ctrl+Z //コマンド中断
-  - bg ジョブ番号 //バックグランドにジョブを回す
-  - jobs ジョブ番号 //ジョブの確認
+  - jobs //ジョブ番号の確認
+  - bg %ジョブ番号 //バックグランドにジョブを回す
+  - jobs //ジョブ実行中である事を確認
   - disown %(ジョブ番号) //ジョブの切り離し
 
 ## カーネル関連
@@ -67,6 +71,10 @@ tags:
   - $ vimで開いて「:set ff?」         //確認の場合
   - $ vimで開いて「:set ff=unix」     //変更の場合
 
+## ディスク関連
+- 容量
+  - **df -Th**
+
 ## ネットワーク
 - IP割当状況
   - **$ ip a**
@@ -74,7 +82,7 @@ tags:
 - 通信状況
   - **$ netstat -pantu**
 - ポート疎通確認
-  - **$ curl -v telnet://<ip address>:<port num>**
+  - **$ curl -v telnet://[ip address]:[port num]**
 - 通信経路確認
   - **$ traceroute -nI [ip address]** //ICMPの場合
   - **$ traceroute -nT -p [ポート番号] [ip address]** //ICMPの場合
