@@ -24,11 +24,11 @@ MySQLにはデフォルトで以下DBが用意されている。
 ## 基本操作
 
 ### サーバ起動
-$ service mysqld start //CentOS7
-$ systemctl start mysqld
+**$ service mysqld start**     //centos7以降  
+**$ systemctl start mysqld**   //centos6以前
 
 ### サーバ停止
-$ mysqladmin -uroot -p shutdown
+**$ mysqladmin -uroot -p shutdown**
 
 ### サーバ接続開始
 $ mysql -h[ホスト名orIP] -u[ユーザー名] -p[パスワード]  
@@ -37,10 +37,11 @@ $ mysql -h[ホスト名orIP] -u[ユーザー名] -p[パスワード] DB名 < inp
 $ mysql -h[ホスト名orIP] -u[ユーザー名] -p[パスワード] DB名 > output.sql //特定ユーザで接続しやりとりを外部SQLファイルに記録
 
 ### サーバ接続終了
-$ mysql> exit;
+$ mysql> exit
 
-### 初期ログイン時パスワードセット
+### パスワード設定
 $ mysql> set password for 'ユーザ名'@'接続元ホスト'='パスワード';  
+**初回ログイン時は、$ mysql> set password for 'root'@'localhost'='testpassword';の要領でパスワード設定**  
 以下メッセージが出たらok。  
 Query OK, 0 rows affected (0.07 sec)
 
@@ -66,18 +67,18 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 - カラムレベルの権限情報一覧  
 **$ mysql> select * from information_schema.column_privileges;**
 
-### 各種環境変数の確認
-- **MySQLで扱う環境変数は以下2種類がある。
-  - セッション変数：一時設定。現在の接続だけが影響する。
-  - グローバル変数：恒久設定。変数設定後のすべての接続が影響する。  
-**$ mysql> show global variables;**  
-**$ mysql> show session variables;**  
+### 環境変数の確認
+- **MySQLで扱う環境変数は以下2種類がある。**
+**セッション変数：一時設定。現在の接続だけが影響する。**
+- **$ mysql> show global variables;**  
+**グローバル変数：恒久設定。変数設定後のすべての接続が影響する。**  
+- **$ mysql> show session variables;**  
 絞り込み表示したい場合は以下  
-$ mysql> show variables like 'キーワード'  
+**$ mysql> show variables like 'キーワード'**  
 キーワード内は%をつけることでアスタリスク的な使い方が出来る  
-$ mysql> show variables like '%character_set%'  
+**$ mysql> show variables like '%character_set%''**
 
-### 現在の状態確認
+### 統計情報の確認
 **$ mysql> show global status;**
 
 ### 現在のINNODBの状態確認
@@ -88,6 +89,9 @@ $ mysql> show variables like '%character_set%'
 
 ### エラー一覧
 **$ mysql> show warnings;**
+
+### 各DBの全テーブルのストレージエンジンの一覧取得
+** $ mysql> SELECT table_name,engine from information_schema.tables where table_schema='データベース名';**
 
 ### 過去の最大コネクション数
 **$ mysql> show status like '%Max_used%';**  
@@ -120,6 +124,17 @@ $ mysql> drop user 'ユーザー名'@'接続元ホスト';
 
 ### ユーザー毎の権限情報確認
 $ mysql> show grants for 'ユーザー名'@'接続元ホスト';
+
+
+### ユーザーへの権限追加
+**$ GRANT 権限 ON DB名.テーブル名 TO ユーザー名@ホスト名  **  
+以下例  
+$ GRANT ALL ON testdb.* TO 'testuser'@'testhost';  
+
+### ユーザーへの権限削除
+**$ REVOKE 権限 ON DB名.テーブル名 FROM ユーザー名@ホスト名;**  
+$ REVOKE ALL ON testdb.* FROM 'testuser'@'testhost';  
+$ **要注意** ユーザーの追加、削除、権限操作の後は必ずFLUSH PRIVILEGESで反映が必要。  
 
 ### ユーザー毎の権限情報確認
 $ mysql> grant all privileges on [DB2名].[テーブル名] to 'ユーザー名'@'接続元ホスト' WITH GRANT OPTION;
@@ -179,6 +194,7 @@ $ mysql> select * from テーブル名;
 ### テーブルの中身の追加
 $ mysql> insert into テーブル名 フィールド名 values フィールドの値;  
 例) $ mysql> insert into table (field1,field2,field3) values (value1,value2,value3);
+例) $ mysql> insert into テーブル名 VALUES('AAA','佐藤','40);
 
 ### テーブルの中身の削除
 $ mysql> delete from テーブル名 where 条件文;  
@@ -263,7 +279,6 @@ select
   - innodb_buffer_pool_size(80%程度), myisam_key_size(25%程度)で用途に応じて設定できているか
 - thread_cache_size = max_connections/3になっているか
   - Treads_createdが目安
-
 
 ## 参考
 - MySQL 運用時に便利なコマンド

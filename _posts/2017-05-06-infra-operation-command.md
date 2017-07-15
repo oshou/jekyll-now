@@ -4,10 +4,13 @@ title: インフラ運用コマンド チートシート(随時更新)
 tags: 
 - os
 ---
-インフラ運用でこれはすぐ叩けるように覚えておきたい、というコマンドをまとめてみた  
+インフラ運用でこれはすぐ叩けるように覚えておきたい必須コマンドをまとめてみた  
 随時更新
   
 <!-- more -->
+
+## マニュアル確認
+- **$ man コマンド名**
 
 ## ユーザー関連
 - ユーザー一覧の確認、編集
@@ -16,21 +19,25 @@ tags:
   - **$ vigr**
 - 現在ログイン中のユーザー一覧
   - **$ w**
-- ユーザーのパスワードロック
-  - **$ passwd -l ユーザー名** //ロック操作
-  - **$ passwd -S ユーザー名** //ロック済確認
 - ログイン失敗履歴
   - **$ lastb**
 - ログイン成功履歴
   - **$ last**
+- ユーザーのロック操作
+  - **$ passwd -S ユーザー名** //ロック状況確認
+  - **$ passwd -l ユーザー名** //ロック
+  - **$ passwd -u ユーザー名** //アンロック
 
 ## プロセス関連
 - プロセス一覧
-  - **$ ps auxww**
+  - **$ ps aux -H   //プロセスを階層構造で表示**
+  - **$ ps aux -L   //スレッド数、スレッドも表示**
 - リソース使用率上位のプロセス一覧
   - **$ top**
-  - オプションzx押してからShift+< or Shift+>で項目ごとに降順ソート可能。
-  - オプション-fで表示項目を選択可能。
+    - **オプションzx押してからShift+< or Shift+>で項目ごとに降順ソート可能。**
+    - **オプションfで表示項目を選択可能。Spaceで選択/非選択、ESCで決定**
+    - **オプションeでメモリの単位切替可能。**
+    - **プロセスの状況は、S(スリープ) / D(割込不可sleep) / T(停止中) / R(実行中) / Z(ゾンビ) / W(スワップアウト)**
 - ディスクIO使用率上位のプロセス一覧
   - $ iotop
 - プロセスが開いているファイルの特定
@@ -40,9 +47,9 @@ tags:
   - $ kill -SIGKILL [PID]
 - プロセスの再起動
   - $ kill -SIGHUP [PID]
-- プロセスの退勤時かけ流し実行(実行前の場合)
+- プロセスのかけ流し実行(実行前の場合)
   - nohup コマンド & 
-- プロセスの退勤時かけ流し実行(既に実行中の場合)
+- プロセスのかけ流し実行(既に実行中の場合)
   - Ctrl+Z //コマンド中断
   - jobs //ジョブ番号の確認
   - bg %ジョブ番号 //バックグランドにジョブを回す
@@ -72,45 +79,45 @@ tags:
   - $ vimで開いて「:set ff=unix」     //変更の場合
 
 ## ディスク関連
-- 容量
+- ファイルシステム毎のディスク容量確認
   - **df -Th**
 
 ## ネットワーク
 - IP割当状況
   - **$ ip a**
-  - **$ ifconfig**
-- 通信状況
+- 通信状況確認
   - **$ netstat -pantu**
-- ポート疎通確認
-  - **$ curl -v telnet://[ip address]:[port num]**
+  - IP別接続数の確認
+    - $ netstat -pantu | awk '{print $4}' | cut -d":" -f1 | sort | uniq -c | sort -rn
 - 通信経路確認
   - **$ traceroute -nI [ip address]** //ICMPの場合
   - **$ traceroute -nT -p [ポート番号] [ip address]** //ICMPの場合
+- ポート疎通確認
+  - **$ curl -v telnet://[ip address]:[port num]**
 - **パケットキャプチャ**
-  - **$ tcpdump -nn -i ethxx**  //基本セット
-  - **$ tcpdump -nn -i ethxx icmp** //ICMPパケットのフィルタ
-  - **$ tcpdump -nn -i ethxx port xx**  //port指定
-  - **$ tcpdump -nn -i ethxx host xxx.xxx.xxx.xxx**  //特定ホストを抽出
-  - **$ tcpdump -nn -i ethxx src host xxx.xxx.xxx.xxx**  //特定ホストを除外
-  - Flagsの意味
+  - **$ tcpdump -vnn -i ethxx**  //基本セット
+  - **$ tcpdump -vnn -i ethxx icmp** //ICMPパケットのフィルタ
+  - **$ tcpdump -vnn -i ethxx port xx**  //port指定
+  - **$ tcpdump -vnn -i ethxx host xxx.xxx.xxx.xxx**  //特定ホストを抽出
+  - **$ tcpdump -vnn -i ethxx not host xxx.xxx.xxx.xxx**  //特定ホストを除外
+  - **Flagsの意味**
     - **.(ACK) / S(SYN) / F(FIN) / P(PUSH) / R(RST) / U(URG) / W(ECN CWR) / E(ECN-Echo)**
-  - 基本的なパターン  
+  - **Flagの基本的なパターン**
     - http://d.hatena.ne.jp/nattou_curry_2/20090822/1250931250
-    - TCPコネクション開始 --> (CLI). -> (SRV)S. -> (CLI). //3-way handshake
-    - TCPコネクション切断 --> (CLI)F. -> (SRV)F. -> (CLI).
+    - **TCPコネクション開始 --> (CLIENT). -> (SRV)S. -> (CLIENT). //3-way handshake**
+    - **TCPコネクション切断 --> (CLIENT)F. -> (SRV)F. -> (CLIENT).**
 - ルーティングテーブルの情報確認
   - $ netstat -rn
-- IP別接続数の確認
-  - $ netstat -pantu | awk '{print $4}' | cut -d":" -f1 | sort | uniq -c | sort -rn
+
+## 名前解決関連
+- **$ dig [ドメイン名] @[ネームサーバー名]**
+  - 例) dig example.jp @8.8.8.8
 
 ## cron関連
 - 全ユーザーが持つcron一覧
   - $ cat /var/spool/cron/*
 - ユーザー個別のcron
   - $ cat /var/spool/cron/ユーザー名
-
-## 名前解決関連
-- **$ dig [ドメイン名] @[ネームサーバー名]**
 
 ## パフォーマンス
 **リアルタイム負荷は何はなくともvmstat。出来ればdstatをインストール。  
@@ -155,13 +162,18 @@ tags:
     - sar -W
   - ディスクIO使用状況
     - sar -b
-  - ネットワークトラフィック(送受信パケット数、バイト数)
-    - sar -n DEV 1 20
+  - ネットワークトラフィック(指定秒単位での送受信パケット数、バイト数)
+    - sar -n DEV 監視する間隔(秒)
+      - 例)sar -n DEV 1
 
 
-### これだけは入れておきたいツールまとめ
+### まずこれだけはyumインストールしたいツールまとめ
+- dstat
 - tcpdump
-- fio
+- curl
+- git
+- vim-common
+
 
 ## 参考
 - 80 Linux Monitoring Tool
