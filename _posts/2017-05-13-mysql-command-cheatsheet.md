@@ -280,6 +280,18 @@ select
 - thread_cache_size = max_connections/3になっているか
   - Treads_createdが目安
 
+
+## 抑えておきたいセキュリティ設定
+- クライアントのホスト名のDNS名前解決を行わない(--skip-name-resolve)
+- 同一ネットワークであればTCPIP接続を使わずUNIXドメインソケット接続にする(--skip-networking)
+- メモリのサイジングを行う。
+  - グローバルバッファ + ( max_connections + スレッドバッファ )
+- バイナリログを使う
+- クエリキャッシュの利用は検討する。
+  - 更新が多い場合は、キャッシュを切った方がよい場合もある。
+  - SELECT実行の度にSELECT文と結果をキャッシュに格納する。キャッシュ利用頻度が少ないのに格納のオーバーヘッドが多いので逆に負担になりかねない。
+- mysql_secure_installation
+
 ## 参考
 - MySQL 運用時に便利なコマンド
   - https://www.qoosky.io/techs/3a369dd466
