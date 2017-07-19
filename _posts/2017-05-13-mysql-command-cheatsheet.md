@@ -99,21 +99,6 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 ### 現在のコネクション数
 **$ mysql> show status like '%Threads_connected%';**  
 
-### メモリ設定確認用SQL
-**こちらでかなり整理してまとめて頂いていたのでリンク**
-**http://masato.ushio.org/blog/index.php/2015/12/31/uco-tech_mysql-memory-usage/**
-```
-$ mysql> 
-select
-@@GLOBAL.INNODB_BUFFER_POOL_SIZE/1024 as GLOBAL_INNODB_BUFFER_POOL_SIZE_mb,
-@@GLOBAL.INNODB_LOG_BUFFER_SIZE/1024 as GLOBAL_INNODB_LOG_BUFFER_SIZE_mb,
-@@GLOBAL.NET_BUFFER_LENGTH/1024 as GLOBAL_NET_BUFFER_LENGTH_mb,
-@@GLOBAL.MAX_CONNECTIONS as MAX_CONNECTIONS,
-(@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE)/1024/1024 as THREAD_BUFFER_SIZE_mb,
-(@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.NET_BUFFER_LENGTH + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024 AS TOTAL_MEMORY_SIZE_mb,
-(@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.NET_BUFFER_LENGTH + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024/1024 AS TOTAL_MEMORY_SIZE_gb
-\G
-```
 
 ## ユーザー操作
 ### ユーザー作成
@@ -246,18 +231,22 @@ $ mysql> analize table テーブル名;
 - $ mysql> show slave status \G
 
 ## 運用のポイント
-- 接続時の不要なDNS問い合わせを避ける
-  - /etc/my.cnfにskip-name-resolveオプションをつけよう
-- キャッシュサイズは適切か?
-  - ヒット率が6割を下回るようであれば見直しをしたほうが良いかもしれません。
-  - http://qiita.com/muran001/items/14f19959d4723ffc29cc
-  - クエリキャッシュヒット率
-  　- ＝キャッシュヒット数 / クエリ発行総数
-  　- ＝キャッシュヒット数 / (キャッシュヒット数＋キャッシュミス数)
-  　- ＝Qcache_hits / ( Qcache_hit + Com_select)　
-- メモリサイジングを適切にしよう
-  - MySQLのメモリは、サーバ全体で使用する「GlobalBuffer」と、各接続毎に確保される「ThreadBuffer」の2種類がある。
-  - **全体のメモリ容量 > GlobalBuffer一式 + (max_connections * ThreadBuffer一式)に収まるようにする。**
+### クライアントホスト名の不要なDNS名前解決を避ける
+- /etc/my.cnfにskip-name-resolveオプションをつける
+
+### ファイルデータはテーブル単位で分割する
+- /etc/my.cnfにinnodb_file_per_tableをつける
+- 後々テーブル単位でファイル整理&容量削減出来るため
+
+### 適切なインデックスをはる
+
+
+### 適切なメモリサイジングをする
+- **こちらでかなり整理してまとめて頂いていたのでリンク**
+- **http://masato.ushio.org/blog/index.php/2015/12/31/uco-tech_mysql-memory-usage/**
+- MySQLのメモリは、サーバ全体で使用する「GlobalBuffer」と、各接続毎に確保される「ThreadBuffer」の2種類がある。
+- **全体のメモリ容量 > GlobalBuffer一式 + (max_connections * ThreadBuffer一式)に収まるようにする。**
+```
 select
 @@GLOBAL.INNODB_BUFFER_POOL_SIZE as GLOBAL_INNODB_BUFFER_POOL_SIZE,
 @@GLOBAL.INNODB_LOG_BUFFER_SIZE as GLOBAL_INNODB_LOG_BUFFER_SIZE,
@@ -271,26 +260,29 @@ select
  (@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.NET_BUFFER_LENGTH + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024 AS TOTAL_MEMORY_SIZE_mb,
  (@@GLOBAL.KEY_BUFFER_SIZE + @@GLOBAL.INNODB_BUFFER_POOL_SIZE + @@GLOBAL.INNODB_LOG_BUFFER_SIZE + @@GLOBAL.NET_BUFFER_LENGTH + (@@GLOBAL.SORT_BUFFER_SIZE + @@GLOBAL.MYISAM_SORT_BUFFER_SIZE + @@GLOBAL.READ_BUFFER_SIZE + @@GLOBAL.JOIN_BUFFER_SIZE + @@GLOBAL.READ_RND_BUFFER_SIZE) * @@GLOBAL.MAX_CONNECTIONS)/1024/1024/1024 AS TOTAL_MEMORY_SIZE_gb
  \G
-- EXPLAINで実行計画を立ててクエリを最適化しよう
-  - 必ずクエリ側でWHERE句による対象絞り込みをし、全件フェッチを避けよう。
+```
+- innodb_buffer_pool_size(80%程度), myisam_key_size(25%程度)で用途に応じて設定できているか
 
-## パフォーマンス
-- global buffer
-  - innodb_buffer_pool_size(80%程度), myisam_key_size(25%程度)で用途に応じて設定できているか
+### クエリキャッシュの利用を検討する
+- 更新が多い場合は、キャッシュを切った方がよい場合もある。
+  - SELECT実行の度にSELECT文と結果をキャッシュに格納する。キャッシュ利用頻度が少ないのに格納のオーバーヘッドが多いので逆に負担になりかねない。
+- http://qiita.com/muran001/items/14f19959d4723ffc29cc
 - thread_cache_size = max_connections/3になっているか
   - Treads_createdが目安
+- クエリキャッシュヒット率
+　- ＝キャッシュヒット数 / クエリ発行総数
+　- ＝キャッシュヒット数 / (キャッシュヒット数＋キャッシュミス数)
+　- ＝Qcache_hits / ( Qcache_hit + Com_select)　
+- ヒット率が6割を下回るようであれば見直しをしたほうが良いかも。
+
+### クエリを最適化する
+- EXPLAINで実行計画を立ててクエリを最適化しよう
+- クエリは必ずWHERE句による対象絞り込みを行う。全件フェッチは行わない。
+
+### TCPIP接続を避ける(同一ホスト内の場合のみ)
+- UNIXドメインソケット接続にする(--skip-networking)
 
 
-## 抑えておきたいセキュリティ設定
-- クライアントのホスト名のDNS名前解決を行わない(--skip-name-resolve)
-- 同一ネットワークであればTCPIP接続を使わずUNIXドメインソケット接続にする(--skip-networking)
-- メモリのサイジングを行う。
-  - グローバルバッファ + ( max_connections + スレッドバッファ )
-- バイナリログを使う
-- クエリキャッシュの利用は検討する。
-  - 更新が多い場合は、キャッシュを切った方がよい場合もある。
-  - SELECT実行の度にSELECT文と結果をキャッシュに格納する。キャッシュ利用頻度が少ないのに格納のオーバーヘッドが多いので逆に負担になりかねない。
-- mysql_secure_installation
 
 ## 参考
 - MySQL 運用時に便利なコマンド
