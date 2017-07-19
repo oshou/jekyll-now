@@ -10,19 +10,7 @@ tags:
 <!-- more -->
 先頭に「mysql> 」が付いたものはmysqlログイン後、ついていないものはログイン前に実施する。
 
-
-## 基本情報
-MySQLにはデフォルトで以下DBが用意されている。
-- information_schema
-  - MySQL関連のメタデータを一元管理するDB
-- performance_schema
-  - パフォーマンス関連のデータを一元管理するDB
-- sys
-  -  performance_schemaやinformation_schemaの情報を見やすくするためのビュー、ストアドプロシージャまとめ
-- mysql
-
 ## 基本操作
-
 ### サーバ起動
 **$ service mysqld start**     //centos7以降  
 **$ systemctl start mysqld**   //centos6以前
