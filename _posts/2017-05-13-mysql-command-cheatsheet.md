@@ -63,7 +63,7 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 - **$ mysql> show session variables;**  
 絞り込み表示したい場合は以下  
 **$ mysql> show variables like 'キーワード'**  
-キーワード内は%をつけることでアスタリスク的な使い方が出来る  
+%はアスタリスク的な使い方が出来るので'%キーワード%'のように囲むとあいまい検索が可能
 **$ mysql> show variables like '%character_set%''**
 
 ### 統計情報の確認
@@ -79,7 +79,7 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 **$ mysql> show warnings;**
 
 ### 各DBの全テーブルのストレージエンジンの一覧取得
-** $ mysql> SELECT table_name,engine from information_schema.tables where table_schema='データベース名';**
+**$ mysql> SELECT table_name,engine from information_schema.tables where table_schema='データベース名';**
 
 ### 過去の最大コネクション数
 **$ mysql> show status like '%Max_used%';**  
@@ -180,6 +180,12 @@ $ mysql> truncate テーブル名;
 ### テーブルの中身の更新
 $ mysql> update テーブル名 set フィールド名 where 条件;  
 例) $ mysql> update table1 set (field1=1) where (field2=4);
+
+### テーブルのロック/アンロック
+$ mysql> lock tables テーブル名 ロック種類(write/read)  
+例) $ mysql> lock tables testtable1 write;  
+例) $ mysql> lock tables testtable2 read;  
+$ mysql> unlock tables;  
 
 ### テーブルの最適化
 $ mysql> analize table テーブル名;
