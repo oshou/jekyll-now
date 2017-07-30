@@ -1,10 +1,10 @@
 ---
 layout: post
 title: MySQL基礎コマンド チートシート(随時更新)
-tags: 
+tags:
 - mysql
 ---
-忘れがちなMySQL基礎コマンドをまとめてみた。  
+忘れがちなMySQL基礎コマンドをまとめてみた。
 随時更新。
   
 <!-- more -->
@@ -12,62 +12,66 @@ tags:
 
 ## 基本操作
 ### サーバ起動
-**$ service mysqld start**     //centos7以降  
+**$ service mysqld start**     //centos7以降
 **$ systemctl start mysqld**   //centos6以前
 
 ### サーバ停止
 **$ mysqladmin -uroot -p shutdown**
 
 ### サーバ接続開始
-$ mysql -h[ホスト名orIP] -u[ユーザー名] -p[パスワード]  
+$ mysql -h[ホスト名orIP] -u[ユーザー名] -p[パスワード]
 $ mysql -h[ホスト名orIP] -u[ユーザー名] -p[パスワード] -e "[実行コマンド]" //コマンド直接実行
-$ mysql -h[ホスト名orIP] -u[ユーザー名] -p[パスワード] DB名 < input.sql //特定ユーザで接続し外部SQLファイルを投入する場合  
+$ mysql -h[ホスト名orIP] -u[ユーザー名] -p[パスワード] DB名 < input.sql //特定ユーザで接続し外部SQLファイルを投入する場合
 $ mysql -h[ホスト名orIP] -u[ユーザー名] -p[パスワード] DB名 > output.sql //特定ユーザで接続しやりとりを外部SQLファイルに記録
 
 ### サーバ接続終了
 $ mysql> exit
 
 ### パスワード設定
-$ mysql> set password for 'ユーザ名'@'接続元ホスト'='パスワード';  
-**初回ログイン時は、$ mysql> set password for 'root'@'localhost'='testpassword';の要領でパスワード設定**  
-以下メッセージが出たらok。  
+$ mysql> set password for 'ユーザ名'@'接続元ホスト'='パスワード';
+**初回ログイン時は、$ mysql> set password for 'root'@'localhost'='testpassword';の要領でパスワード設定**
+以下メッセージが出たらok。
 Query OK, 0 rows affected (0.07 sec)
 
 
 ## 設定情報確認
 ### MySQLバージョン確認
-**$ mysql -V**  
-以下のような画面が表示されたらok  
+**$ mysql -V**
+以下のような画面が表示されたらok
 $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 
 ### アクティブプロセス一覧
 **$ mysql> show full processlist;**
 
 ### 登録済ユーザー・権限一覧
-- 登録済ユーザー一覧  
+- 登録済ユーザー一覧
 **$ mysql> select host,user from mysql.user;**
-- グローバルレベルの権限情報一覧  
+- グローバルレベルの権限情報一覧
 **$ mysql> select * from information_schema.user_privileges;**
-- DBスキーマレベルの権限情報一覧  
+- DBスキーマレベルの権限情報一覧
 **$ mysql> select * from information_schema.schema_privileges;**
-- テーブルレベルの権限情報一覧  
+- テーブルレベルの権限情報一覧
 **$ mysql> select * from information_schema.table_privileges;**
-- カラムレベルの権限情報一覧  
+- カラムレベルの権限情報一覧
 **$ mysql> select * from information_schema.column_privileges;**
 
 ### 環境変数の確認
 - **MySQLで扱う環境変数は以下2種類がある。**
 **セッション変数：一時設定。現在の接続だけが影響する。**
-- **$ mysql> show global variables;**  
-**グローバル変数：恒久設定。変数設定後のすべての接続が影響する。**  
-- **$ mysql> show session variables;**  
-絞り込み表示したい場合は以下  
-**$ mysql> show variables like 'キーワード'**  
+- **$ mysql> show global variables;**
+**グローバル変数：恒久設定。変数設定後のすべての接続が影響する。**
+- **$ mysql> show session variables;**
+絞り込み表示したい場合は以下
+**$ mysql> show variables like 'キーワード'**
 %はアスタリスク的な使い方が出来るので'%キーワード%'のように囲むとあいまい検索が可能
 **$ mysql> show variables like '%character_set%''**
 
 ### 統計情報の確認
 **$ mysql> show global status;**
+例)過去の最大コネクション数
+**$ mysql> show status like '%Max_used%';**
+例)現在のコネクション数
+**$ mysql> show status like '%Threads_connected%';**
 
 ### 現在のINNODBの状態確認
 **$ mysql> show engine innodb status;**
@@ -80,12 +84,6 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 
 ### 各DBの全テーブルのストレージエンジンの一覧取得
 **$ mysql> SELECT table_name,engine from information_schema.tables where table_schema='データベース名';**
-
-### 過去の最大コネクション数
-**$ mysql> show status like '%Max_used%';**  
-
-### 現在のコネクション数
-**$ mysql> show status like '%Threads_connected%';**  
 
 
 ## ユーザー操作
@@ -100,14 +98,14 @@ $ mysql> show grants for 'ユーザー名'@'接続元ホスト';
 
 
 ### ユーザーへの権限追加
-**$ GRANT 権限 ON DB名.テーブル名 TO ユーザー名@ホスト名  **  
-以下例  
-$ GRANT ALL ON testdb.* TO 'testuser'@'testhost';  
+**$ GRANT 権限 ON DB名.テーブル名 TO ユーザー名@ホスト名  **
+以下例
+$ GRANT ALL ON testdb.* TO 'testuser'@'testhost';
 
 ### ユーザーへの権限削除
-**$ REVOKE 権限 ON DB名.テーブル名 FROM ユーザー名@ホスト名;**  
-$ REVOKE ALL ON testdb.* FROM 'testuser'@'testhost';  
-$ **要注意** ユーザーの追加、削除、権限操作の後は必ずFLUSH PRIVILEGESで反映が必要。  
+**$ REVOKE 権限 ON DB名.テーブル名 FROM ユーザー名@ホスト名;**
+$ REVOKE ALL ON testdb.* FROM 'testuser'@'testhost';
+$ **要注意** ユーザーの追加、削除、権限操作の後は必ずFLUSH PRIVILEGESで反映が必要。
 
 ### ユーザー毎の権限情報確認
 $ mysql> grant all privileges on [DB2名].[テーブル名] to 'ユーザー名'@'接続元ホスト' WITH GRANT OPTION;
@@ -121,19 +119,19 @@ $ mysql> show databases;
 $ mysql> show create database DB名;
 
 ### DB作成
-$ mysql> create database DB名;  
-以下メッセージが出たらok  
+$ mysql> create database DB名;
+以下メッセージが出たらok
 $ Query OK, 1 row affected (0.00 sec)
 
 ### DB削除
-$ mysql> drop database DB名;  
-以下メッセージが出たらok。  
-$ Query OK, 0 rows affected (0.13 sec)  
+$ mysql> drop database DB名;
+以下メッセージが出たらok。
+$ Query OK, 0 rows affected (0.13 sec)
 ※show databasesで消えている事を確認。
 
 ### 使用するDBの指定
-$ mysql> use DB名;  
-以下メッセージが出たらok。  
+$ mysql> use DB名;
+以下メッセージが出たらok。
 Database changed
 
 ### 指定したDBへの特定ユーザーの権限付与
@@ -147,15 +145,15 @@ $ mysql> show tables;
 $ mysql> show create table テーブル名;
 
 ### テーブル定義の確認
-$ mysql> desc テーブル名;  
+$ mysql> desc テーブル名;
 ※descはdescriptionの略
 
 ### テーブル作成
-$ mysql> create table テーブル名;  
-    -> (  
-    -> id INT(10),  
-    -> name VARCHAR(30)  
-    -> );  
+$ mysql> create table テーブル名;
+    -> (
+    -> id INT(10),
+    -> name VARCHAR(30)
+    -> );
 $ Query OK, 0 rows affected (0.09 sec)
 
 - テーブル削除
@@ -165,27 +163,27 @@ $ mysql> drop table テーブル名;
 $ mysql> select * from テーブル名;
 
 ### テーブルの中身の追加
-$ mysql> insert into テーブル名 フィールド名 values フィールドの値;  
+$ mysql> insert into テーブル名 フィールド名 values フィールドの値;
 例) $ mysql> insert into table (field1,field2,field3) values (value1,value2,value3);
 例) $ mysql> insert into テーブル名 VALUES('AAA','佐藤','40);
 
 ### テーブルの中身の削除
-$ mysql> delete from テーブル名 where 条件文;  
+$ mysql> delete from テーブル名 where 条件文;
 例) $ mysql> delete from table1 where id=3;
 
 ### テーブルの中身の全消去
-$ mysql> truncate テーブル名;  
+$ mysql> truncate テーブル名;
 例) $ mysql> truncate table1;
 
 ### テーブルの中身の更新
-$ mysql> update テーブル名 set フィールド名 where 条件;  
+$ mysql> update テーブル名 set フィールド名 where 条件;
 例) $ mysql> update table1 set (field1=1) where (field2=4);
 
 ### テーブルのロック/アンロック
-$ mysql> lock tables テーブル名 ロック種類(write/read)  
-例) $ mysql> lock tables testtable1 write;  
-例) $ mysql> lock tables testtable2 read;  
-$ mysql> unlock tables;  
+$ mysql> lock tables テーブル名 ロック種類(write/read)
+例) $ mysql> lock tables testtable1 write;
+例) $ mysql> lock tables testtable2 read;
+$ mysql> unlock tables;
 
 ### テーブルの最適化
 $ mysql> analize table テーブル名;
@@ -205,9 +203,9 @@ $ mysql> analize table テーブル名;
   - mysqldump -u'ユーザー名' -p'パスワード' -d DB名 > backup.sql
 
 ### 実行時にエラーが出た場合
-以下エラーが出た場合はmy.cnfを修正  
-「mysqldump: unknown variable 'symbolic-links=0'」  
-変更箇所  
+以下エラーが出た場合はmy.cnfを修正
+「mysqldump: unknown variable 'symbolic-links=0'」
+変更箇所
 - MySQLの設定ファイル「my.cnf」にて「symbolic-links」をコメントアウト
 
 ## リストア
@@ -266,7 +264,7 @@ select
 - クエリキャッシュヒット率
 　- ＝キャッシュヒット数 / クエリ発行総数
 　- ＝キャッシュヒット数 / (キャッシュヒット数＋キャッシュミス数)
-　- ＝Qcache_hits / ( Qcache_hit + Com_select)　
+　- ＝Qcache_hits / ( Qcache_hit + Com_select)
 - ヒット率が6割を下回るようであれば見直しをしたほうが良いかも。
 
 ### クエリを最適化する
@@ -275,8 +273,6 @@ select
 
 ### TCPIP接続を避ける(同一ホスト内の場合のみ)
 - UNIXドメインソケット接続にする(--skip-networking)
-
-
 
 ## 参考
 - MySQL 運用時に便利なコマンド
