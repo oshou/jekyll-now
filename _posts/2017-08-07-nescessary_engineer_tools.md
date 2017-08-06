@@ -26,7 +26,7 @@ tags:
 - (Chrome拡張)Secure Shell
 
 ### ソース管理
-- SourceTree
+- SourceTree(Github連携)
 
 ### メーラー
 - Gmail
