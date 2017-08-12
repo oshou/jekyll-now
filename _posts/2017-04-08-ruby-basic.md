@@ -4,21 +4,19 @@ title: Ruby基本文法メモ
 tags: 
 - ruby
 ---
-よく使うライブラリ等まとめてみた
-  
+
+Rubyの基本文法、基礎知識をまとめてみた。
 <!-- more -->
+
 ## 必須資料
-- Ruby言語 ミニマム
-  - http://i.loveruby.net/ja/rhg/book/minimum.html
-- Rubyコーディング規約
-  - http://shugo.net/ruby-codeconv/codeconv.html
-- リファレンスマニュアル
-  - http://docs.ruby-lang.org/ja/2.1.0/doc/index.html
-- 組み込みライブラリ一覧
-  - http://docs.ruby-lang.org/ja/2.1.0/library/_builtin.html
+- **リファレンスマニュアル**
+  - **https://docs.ruby-lang.org/ja/latest/doc/index.html**
 
 ## Rubyの特徴
-- 実行ファイルの拡張子が「.rb」
+- **Ruby言語 ミニマム**
+  - **http://i.loveruby.net/ja/rhg/book/minimum.html**
+- **Rubyの特徴**
+  - **http://docs.ruby-lang.org/ja/latest/doc/spec=2fintro.html**
 - 文法がシンプルで直感的。
 - 扱う対象全てがオブジェクト。
   - 文字列はStringクラスのメソッド、配列はArrayクラスのメソッド、、、等
@@ -28,75 +26,142 @@ tags:
 - ユーザによるメモリ管理が不要。不要となったオブジェクトはインタプリタに組み込みのGCが勝手に回収してくれる。
 - モジュールによるMix-in機能を持つ。
 
-## 基本概念の理解
-- オブジェクト
-  - データとメソッドを持つ
-  - オブジェクトが持つメソッドは「オブジェクト.メソッド」というドット(.)区切りで表される。
-  - オブジェクトはidを持っており、オブジェクト名.object_idで確認可能
-- 変数とは
-  - データの入れ物
-  - 「変数名 = 値」で代入可能。
-  - 数字始まり、ローマ字、日本語等はNG
-    - 1name
-    - namae
-    - 名前
+## データ型
+オブジェクト型のみ
+一般的な文字列、配列等はすべてクラス扱い(Stringクラス、Arrayクラス等) 
+```
+# 文字列
+# //Stringクラス
+# //シングルクォーテーション、ダブルクォーテーションどちらかで囲む
+str1 = "こんにちは"
+str2 = 'こんばんは'
+
+# 数値
+# //Fixnumクラス
+val = 1
+
+# 配列
+# //Arrayクラス
+ary1 = [1,2,3,4,5]
+
+# //インデックスは0からカウント
+ary[0]
+=> 1
+
+# //未指定箇所はデフォルトでnil
+ary[5]
+=> nil
+
+
+# ハッシュ(連想配列)
+# //Hashクラス
+# //文字列はkey,valueともに""で囲むこと
+user1 = {"name"=>"sato","mail"=>"sato@hoge.co.jp"}
+
+# //インデックス指定で要素参照
+user1["name"]
+=> "sato"
+
+# 真偽値
+# 偽はfalseとnilのみ
+# それ以外は真。0も空白(" ")も真
+```
+
+## コーディング規約
+- **https://shugo.net/ruby-codeconv/codeconv.html**
+- **https://github.com/fortissimo1997/ruby-style-guide/blob/japanese/README.ja.md**
 
 ## 基本文法
-- 文末にセミコロンを付けない
-- インデントを適宜行う。インデント幅2。スペースのみ、タブは使用しない。(環境によりタブ幅が異なるため)
-- 空行
-  - 複数のクラス定義がある場合、各class定義の間は1行あける
-- 命名規則
-  - クラス、モジュール名
-    - CamelCase。各単語の最初は大文字とする。_は使わない。
-    - 例外としてHTTPやXML等の大文字の固有名詞はそのまま表す。
-      - 例) ◯ ExampleClass、HTTPClient
-      - 例) × Example_class、Exampleclass、HttpClient
-  - メソッド名
-    - 英小文字のsnake_case。
-      - 例) ◯ add_something
-      - 例) × addSomething、Add_something
-    - 真偽を表す場合は、動詞または形容詞に?をつける。形容詞にis_はつけない。
-      - 例) ◯ visible?
-      - 例) × is_visible、is_visible?
-    - 破壊的なメソッドを表す場合は、末尾に!を付ける。
-      - 例) split  #非破壊的メソッド
-      - 例) split! #破壊的メソッド
-    - 「末尾に!がつくメソッドは破壊的メソッド」だが「!がなければ破壊的メソッドではない」わけではない。間違えやすいので要注意。
-      - 例)concat等
-      - !付きでない破壊的なメソッドは以下参考
-          http://goo.gl/aM1Sci
-  - 定数
-    - 大文字のsnake_case
-      - 例) ◯ EXAMPLE_CONSTANT
-  - 変数
-    - 基本的に、英小文字 or _始まり のsnake_caseを使う。
-      - 例) local_variable
-    - グローバル変数の場合は、頭に$をつける
-      - 例) $global_variable
-    - インスタンス変数の場合は、頭に@を付ける。
-      - 例) @variable
-    - クラス変数の場合は、頭に@@を付ける。
-      - 例) @@variable
-- 文字列
-  - ダブルクォーテーション、シングルクォーテーションどちらかで囲む。
-- 真偽
-  - 偽はfalseとnilのみ
-  - それ以外は真。0も空白(" ")も真
-- 配列
-  - インデックスは0始まり
-  - [式,式,式]で配列生成
-  - 配列アクセスは、配列[インデックス]
-- ハッシュ(連想配列)
-  - {key1 => val1, key2 => val2 }でハッシュ生成
-  - ハッシュ[key]でアクセス
-  - この時、文字列で入力する場合はkey,valueともに""で囲む事。忘れがち
-- シンボル
-  - コロン(:)で始まる文字列
-    - 例):include
-  - 文字列に似たオブジェクトで、ハッシュキーなど簡単な文字列参照等では、以下の理由から文字列オブジェクトの代わりによく使われる。
-    - 可読性が高い
-    - 新たにオブジェクトを生成しないのでメモリの節約になる
+### ファイル
+- **実行ファイルの拡張子が「.rb」**
+- **エンコーディングはutf-8**
+- **文末にセミコロン(;)を付けない**
+- 演算子(+-*/={}等)の前後、カンマ(,)、コロン(:)、セミコロン(;)の後ろには1スペースを入れる
+
+### インデント
+- **スペース2つ分、タブは使用しない。(環境によりタブ幅が異なるため)**
+
+### 桁数
+- 1行の桁数は最大80行まで
+
+### 空行
+- 複数のクラス定義がある場合、各クラス定義の間は1行あける
+
+### コメント
+```
+# ここはコメント
+```
+
+### 命名規則
+- ファイル名
+```
+# lower_snake_case
+hello_world.rb
+```
+- ディレクトリ名
+```
+# lower_snake_case
+lib/hello_world/hello_world.rb
+```
+- 定数
+```
+# UPPER_SNAKE_CASE
+SAMPLE_CONSTANT = 10
+```
+- 変数
+```
+# lower_snake_case
+sample_variable = "sample"
+
+# グローバル変数の場合は、先頭に$
+$global_sample_variable = "global"
+
+# インスタンス変数の場合は、先頭に@
+@instance_sample_variable = "instance"
+
+# クラス変数の場合は、先頭に@@
+@@class_sample_variable = "class"
+```
+
+- クラス、モジュール名
+```
+# UpperCamelCaseを使う
+
+class SampleClass
+end
+
+module SampleModule
+end
+```
+- メソッド名
+```
+# lower_snake_caseを使う
+def sample_method
+end
+
+# 真偽値を表すメソッドは、末尾に動詞または形容詞のあとに?をつける。is_は先頭につけない。
+# // ○良い例
+def visible?
+end
+
+# // x悪い例
+def is_visible
+end
+
+def visible
+end
+
+# 破壊的なメソッドであれば、末尾に!をつける。
+def sample_split!
+end
+
+# ただし、「!がなければ破壊的メソッドではない」わけではない。間違えやすいので注意。
+# !付きでない破壊的メソッドは以下
+# http://goo.gl/aM1Sci
+def concat
+end
+```
+
 - メソッド
   - インスタンスメソッド
     - レシーバがインスタンスのメソッド
@@ -147,8 +212,10 @@ tags:
   - && かつ
   - || または
 
-## よく使う組み込みイブラリ
-- 文字列(String)
+## 主な組み込みイブラリ
+- 組み込みライブラリ一覧(require不要)
+  - http://docs.ruby-lang.org/ja/2.1.0/library/_builtin.html
+- 文字列(String)クラス
   - 文字列置換（正規表現で指定した条件を抽出）
     - str.gsub(/at/,"@")   #gsubは該当する全ての要素を置換する(atatatなら@@@に変換)
     - str.sub(/at/,"@")     #subは最初の要素だけ置換する(atatatなら@atatに変換)
@@ -171,8 +238,8 @@ tags:
     - "abcde".index("z")    # index=nil
   - 文字列の一部抽出
     - "abcde"[0]               #=> a
-    - "abcde"[0,３]           #=> abc      ※index0から3文字目まで
-- 配列(Array)
+    - "abcde"[0,3]           #=> abc      ※index0から3文字目まで
+- 配列(Array)クラス
   - 配列の要素数を確認
     - [].length         #=> 0
     - [1,2,3].length #=> 3
@@ -182,12 +249,20 @@ tags:
   - 配列要素の中で最大値、最小値を求める
     - [1,3,7,2,5].max   #=> 7
     - [1,3,7,2,5].min    #=> 1
-  - 配列要素の末尾から指定要素分だけ削除
+  - 配列の先頭から削除、追加
     - ary = [1,3,7,2,5]
-    - ary.pop               #=> 5                    ※引数指定の場合は末尾1文字だけ取得、配列からは削除
+    - ary.shift               #=> 1               ※引数指定しない場合は、先頭から1文字取得&配列から除外
+    - ary                     #=> [3,7,2,5]
+    - ary.shift(2)            #=> [3,7]           ※引数指定する場合は、先頭から引数分だけ取得&配列から除外
+    - ary                     #=> [2,5]
+    - ary.unshift(1)          #=> [1,2,5]
+  - 配列の末尾から削除、追加
+    - ary = [1,3,7,2,5]
+    - ary.pop                 #=> 5                 ※引数指定の場合は末尾から指定要素数分だけ取得、配列からは削除
     - ary                     #=> [1,3,7,2]
-    - ary.pop(2)          #=> [7,2]               ※引数指定の場合は指定要素分だけ取得、配列からは削除
+    - ary.pop(2)              #=> [7,2]               ※引数指定の場合は末尾から指定要素数分だけ取得、配列からは削除
     - ary                     #=> [1,3]
+    - ary.push(8)             #=> [1,3,8]
   - 配列が空かどうかの確認
     - [].empty?         #=> true
     - [1,2,3].empty? #=> false
@@ -211,7 +286,7 @@ tags:
     - ary = [0,1,2,3]
     - ary.delete_at(2) =>2
     - ary   #=> [0,1,3]
-- 数値(Fixnum)
+- 数値(Fixnum)クラス
   - 絶対値を取得
     - (-1).abs          #=> 1
 - 浮動小数値(Float)
@@ -221,6 +296,33 @@ tags:
     - (2.42).ceil
 - IO
   - io#gets
+
+## 環境設定絡みの基礎知識
+- gem
+  - Ruby用ライブラリの管理方式。
+  - pythonのpip,PHPのpear or composer,javaのmaven,perlのcpan
+- Rubygems
+  - ライブラリのインストール元となる共有レポジトリ。
+- rbenv，rvm
+  - Ruby本体のバージョン管理システム。ライブラリはBundlerが担当するので区別して覚える。
+  - 複数のRubyバージョンの管理、切換えが可能。
+- Bundler
+  - Ruby用ライブラリのバージョン管理システム。
+  - 必要なライブラリ同士で互換性に問題が無いようにインストールしてくれる。
+http://komaken.me/blog/2013/07/05/%E9%A0%AD%E3%81%8C%E5%BC%B1%E3%81%99%E3%81%8E%E3%81%A6ruby-rbenv-gem-bundle-rails%E3%81%AE%E4%BB%95%E7%B5%84%E3%81%BF%E3%81%8C%E7%90%86%E8%A7%A3%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E3%83%BB/
+
+## 環境設定
+- Ruby本体のインストール
+  - 複数のrubyバージョンを管理する場合
+    - rbenv,ruby-buildのインストール
+  - rubyのインストール
+    - rbenv versions //現状のrubyバージョン確認
+    - rbenv install xxxxxx //指定バージョンをインストール
+    - rbenv global xxxxxx //デフォルトバージョンをインストールしたものに変更
+    - rbenv version //デフォルトバージョンが指定された事を確認
+- Ruby用ライブラリのインストール
+  - Bundlerインストール
+  - Gemfile
 
 ## 参考
 - 以外に忘れられている便利なメソッド
