@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ruby基本文法メモ
+title: Ruby基礎文法最速マスター(随時更新)
 tags: 
 - ruby
 ---
