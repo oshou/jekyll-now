@@ -98,22 +98,25 @@ hello_world.rb
 ```
 
 - ディレクトリ名
+
 ```
 # lower_snake_case
 lib/hello_world/hello_world.rb
 ```
 
 - 定数
+
 ```
 # UPPER_SNAKE_CASE
 SAMPLE_CONSTANT = 10
 ```
 
 - 変数
+
 ```
 # lower_snake_case
 sample_variable = "sample"
- 
+
 # グローバル変数の場合は、先頭に$
 $global_sample_variable = "global"
  
@@ -125,6 +128,7 @@ $global_sample_variable = "global"
 ```
 
 - クラス、モジュール名
+
 ```
 # UpperCamelCaseを使う
 
@@ -136,6 +140,7 @@ end
 ```
 
 - メソッド名
+
 ```
 # lower_snake_caseを使う
 def sample_method
