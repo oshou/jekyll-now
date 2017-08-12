@@ -71,7 +71,6 @@ user1["name"]
 - **https://shugo.net/ruby-codeconv/codeconv.html**
 - **https://github.com/fortissimo1997/ruby-style-guide/blob/japanese/README.ja.md**
 
-## 基本文法
 ### ファイル
 - **実行ファイルの拡張子が「.rb」**
 - **エンコーディングはutf-8**
