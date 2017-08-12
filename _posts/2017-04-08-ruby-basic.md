@@ -109,7 +109,7 @@ lib/hello_world/hello_world.rb
 SAMPLE_CONSTANT = 10
 ```
 
-- 変数  
+- 変数
 ```
 # lower_snake_case
 sample_variable = "sample"
