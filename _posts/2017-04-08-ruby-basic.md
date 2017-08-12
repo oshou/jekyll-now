@@ -305,7 +305,7 @@ end
 - IO
   - io#gets
 
-## 環境設定絡みの基礎知識
+## ライブラリ管理の基礎
 - gem
   - Ruby用ライブラリの管理方式。
   - pythonのpip,PHPのpear or composer,javaのmaven,perlのcpan
@@ -330,10 +330,4 @@ http://komaken.me/blog/2013/07/05/%E9%A0%AD%E3%81%8C%E5%BC%B1%E3%81%99%E3%81%8E%
     - rbenv version //デフォルトバージョンが指定された事を確認
 - Ruby用ライブラリのインストール
   - Bundlerインストール
-  - Gemfile
-
-## 参考
-- 以外に忘れられている便利なメソッド
-  - http://ruby-rails.hatenadiary.com/entry/20150101/1420049679
-- よく使うString型のメソッド
-  - http://qiita.com/shizuma/items/67650b1a22f8be1d7fc0
+  - Gemfileに記載して各ライブラリをbundle install
