@@ -110,6 +110,7 @@ SAMPLE_CONSTANT = 10
 ```
 
 - 変数
+
 ```
 # lower_snake_case
 sample_variable = "sample"
