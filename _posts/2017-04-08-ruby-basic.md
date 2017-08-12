@@ -113,13 +113,13 @@ SAMPLE_CONSTANT = 10
 ```
 # lower_snake_case
 sample_variable = "sample"
-
+ 
 # グローバル変数の場合は、先頭に$
 $global_sample_variable = "global"
-
+ 
 # インスタンス変数の場合は、先頭に@
 @instance_sample_variable = "instance"
-
+ 
 # クラス変数の場合は、先頭に@@
 @@class_sample_variable = "class"
 ```
