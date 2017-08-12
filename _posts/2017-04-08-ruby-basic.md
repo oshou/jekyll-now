@@ -127,8 +127,10 @@ STDIN, STDOUT, STDERR, ARGV, ARGF, ENV, RUBY_VERSION...etc.
 ```
 # lower_snake_case
 sample_variable = "sample"
+
 # //文字列内の変数は#{変数名}で表現
 puts "値は#{sample_variable}です"
+
 
 # グローバル変数の場合は、先頭に$
 $global_sample_variable = "global"
