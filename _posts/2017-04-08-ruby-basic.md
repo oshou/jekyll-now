@@ -6,7 +6,6 @@ tags:
 ---
 
 Rubyの基本文法、基礎知識をまとめてみました。  
-随時更新。
 <!-- more -->
 
 ## 必須資料
@@ -32,12 +31,12 @@ Rubyの基本文法、基礎知識をまとめてみました。
 
 ### ファイル
 - **実行ファイルの拡張子が「.rb」**
-- **エンコーディングはutf-8**
+- **エンコーディングはUTF-8N(BOM無しUTF-8)**
 - **文末にセミコロン(;)を付けない**
 - **演算子(+-*/={}等)の前後、カンマ(,)、コロン(:)、セミコロン(;)の後ろには1スペースを入れる**
 
 ### インデント
-- **スペース2つ分、タブは使用しない。(環境によりタブ幅が異なるため)**
+- **スペース2つ分、タブは使用しない(環境によりタブ幅が異なるため)**
 
 ### 桁数
 - 1行の桁数は最大80行まで
@@ -115,7 +114,7 @@ lib/hello_world/hello_world.rb
 - 定数
 
 ```
-# UPPER_SNAKE_CASE
+# UPPER_SNAKE_CASEを使う
 SAMPLE_CONSTANT = 10
 
 # 組み込み定数
@@ -125,12 +124,14 @@ STDIN, STDOUT, STDERR, ARGV, ARGF, ENV, RUBY_VERSION...etc.
 - 変数
 
 ```
-# lower_snake_case
+# lower_snake_caseを使う
 sample_variable = "sample"
 
 # //文字列内の変数は#{変数名}で表現
 puts "値は#{sample_variable}です"
 
+# シンボルの場合は、先頭:付きのlower_snake_case
+:sample_symbol
 
 # グローバル変数の場合は、先頭に$
 $global_sample_variable = "global"
@@ -140,6 +141,7 @@ $global_sample_variable = "global"
  
 # クラス変数の場合は、先頭に@@
 @@class_sample_variable = "class"
+
 ```
 
 - クラス、モジュール名
@@ -241,99 +243,143 @@ end
 ## 主な組み込みイブラリ
 - 組み込みライブラリ一覧(require不要)
   - http://docs.ruby-lang.org/ja/2.1.0/library/_builtin.html
-- Kernel
-  - 出力
-    - print #改行なし
-    - puts  #改行あり
-    - sprintf
-  - 入力
-    - gets
-- 文字列(String)クラス
-  - 文字列連結
-    - str1+str2
-  - 文字列末尾追加
-    - str1.concat(str2)
-    - str1 << str2
-  - 文字列置換（正規表現で指定した条件を抽出）
-    - str.gsub(/at/,"@")   #gsubは該当する全ての要素を置換する(atatatなら@@@に変換)
-    - str.sub(/at/,"@")     #subは最初の要素だけ置換する(atatatなら@atatに変換)
-  - 末尾改行文字を除外（特定文字の除外も可能）
-    - str.chomp
-    - str.chomp(":") #:で改行する場合
-  - 大文字、小文字変換
-    - "abcde".upcase   　　　 #=> "ABCDE"
-    - "ABCDE".downcase　　 #=> "abcde
-  - 指定文字列で文字列全体を分割、配列にする
-    - "Alice Bob Charlie".split(" ")   #=> ["Alice", "Bob", "Charlie" ]
-    - "Alice,Bob,Charlie".split(",")   #=> ["Alice", "Bob", "Charlie" ]
-  - 指定した文字列を含んでいるか確認
-    - "abcde".include?("bc")   #=> true
-    - "abcde".include?("zy")   #=> false
-  - 指定した文字列を含んでいれば、その開始位置を返す、存在しなければnilを返す
-    - "abcde".index("a")    # index=0
-    - "abcde".index("c")    # index=2
-    - "abcde".index("abc") # index=0
-    - "abcde".index("z")    # index=nil
-  - 文字列の一部抽出
-    - "abcde"[0]               #=> a
-    - "abcde"[0,3]           #=> abc      ※index0から3文字目まで
-- 配列(Array)クラス
-  - 配列の要素数を確認
-    - [].length         #=> 0
-    - [1,2,3].length #=> 3
-    - [1,2,3].size     #=> 3
-  - 文字列への変換
-    - ary.to_s
-  - 配列要素の中で最大値、最小値を求める
-    - [1,3,7,2,5].max   #=> 7
-    - [1,3,7,2,5].min    #=> 1
-  - 配列の先頭から削除、追加
-    - ary = [1,3,7,2,5]
-    - ary.shift               #=> 1               ※引数指定しない場合は、先頭から1文字取得&配列から除外
-    - ary                     #=> [3,7,2,5]
-    - ary.shift(2)            #=> [3,7]           ※引数指定する場合は、先頭から引数分だけ取得&配列から除外
-    - ary                     #=> [2,5]
-    - ary.unshift(1)          #=> [1,2,5]
-  - 配列の末尾から削除、追加
-    - ary = [1,3,7,2,5]
-    - ary.pop                 #=> 5                 ※引数指定の場合は末尾から指定要素数分だけ取得、配列からは削除
-    - ary                     #=> [1,3,7,2]
-    - ary.pop(2)              #=> [7,2]               ※引数指定の場合は末尾から指定要素数分だけ取得、配列からは削除
-    - ary                     #=> [1,3]
-    - ary.push(8)             #=> [1,3,8]
-  - 配列が空かどうかの確認
-    - [].empty?         #=> true
-    - [1,2,3].empty? #=> false
-  - 配列要素の中で、指定した特定要素を含むか確認
-    - [1,2,3].include?(1)    #=> true
-    - [1,2,3].include?(10)  #=> false
-  - 末尾に要素追加
-    - [1,2,3] << 4    #=> [1,2,3,4]
-  - 先頭に要素追加
-    - [1,2,3] .unshift(0)  #=>[0,1,2,3]
-  - 先頭要素の削除
-    - ary=[0,1,2,3]
-    - ary.shift  #=> 0
-    - ary  #=>[1,2,3]
-      - [1,2,3] .unshift(0)  #=>[0,1,2,3]
-  - ランダムに要素取得
-    - [1,3,7,2,5].sample   #=> 5  ※結果は毎回ランダムで選ばれる。
-  - 配列の複製
-    - tmp = self.dup
-  - 指定したインデックスの要素の削除 ※破壊的メソッド
-    - ary = [0,1,2,3]
-    - ary.delete_at(2) =>2
-    - ary   #=> [0,1,3]
-- 数値(Fixnum)クラス
-  - 絶対値を取得
-    - (-1).abs          #=> 1
-- 浮動小数値(Float)
-  - 小数値を特定桁で四捨五入
-    - (2.58926).round(2)  #=> 2.59
-  - 少数値を特定行で切り上
-    - (2.42).ceil
-- IO
-  - io#gets
+
+## Kernel
+
+```
+## 出力
+- print #改行なし
+- puts  #改行あり
+- sprintf
+## 入力
+- gets
+```
+
+### 文字列(String)クラス
+
+```
+# 文字列連結
+- str1+str2
+
+# 文字列末尾追加
+- str1 << str2
+- str1.concat(str2)
+
+# 文字列の一部抽出
+- "abcde"[0]           #=> a
+- "abcde"[0,3]         #=> abc      ※index0から3文字目まで
+
+# 末尾改行文字を除外（特定文字の除外も可能）
+- str.chomp
+- str.chomp(":") #:で改行する場合
+
+# 文字列置換（正規表現で指定した条件を抽出）
+- str.gsub(/at/,"@")   #gsubは該当する全ての要素を置換する(atatatなら@@@に変換)
+- str.sub(/at/,"@")    #subは最初の要素だけ置換する(atatatなら@atatに変換)
+
+# 大文字、小文字変換
+- "abcde".upcase   　　#=> "ABCDE"
+- "ABCDE".downcase　　 #=> "abcde
+
+# 指定した文字列を含んでいれば、その開始位置を返す、存在しなければnilを返す
+- "abcde".index("a")   # index=0
+- "abcde".index("c")   # index=2
+- "abcde".index("abc") # index=0
+- "abcde".index("z")   # index=nil
+
+# 指定文字列で文字列全体を分割、配列にする
+- "Alice Bob Charlie".split(" ")   #=> ["Alice", "Bob", "Charlie" ]
+- "Alice,Bob,Charlie".split(",")   #=> ["Alice", "Bob", "Charlie" ]
+
+# 指定した文字列を含んでいるか確認
+- "abcde".include?("bc")   #=> true
+- "abcde".include?("zy")   #=> false
+
+# 文字列反転
+- "abcde".reverse      #=>"edcba"
+```
+
+
+### 配列(Array)クラス
+
+```
+# 配列の要素数を確認
+- [].length         #=> 0
+- [1,2,3].length    #=> 3
+- [1,2,3].size      #=> 3
+
+# 文字列への変換
+- ary.to_s
+
+# 配列要素の中で最大値、最小値を求める
+- [1,3,7,2,5].max   #=> 7
+- [1,3,7,2,5].min   #=> 1
+
+# 配列の先頭から削除、追加
+- ary = [1,3,7,2,5]
+- ary.shift               #=> 1               ※引数指定しない場合は、先頭から1文字取得&配列から除外
+- ary                     #=> [3,7,2,5]
+- ary.shift(2)            #=> [3,7]           ※引数指定する場合は、先頭から引数分だけ取得&配列から除外
+- ary                     #=> [2,5]
+- ary.unshift(1)          #=> [1,2,5]
+
+# 配列の末尾から削除、追加
+- ary = [1,3,7,2,5]
+- ary.pop                 #=> 5               ※引数指定しない場合は、末尾から1文字取得&配列から除外
+- ary                     #=> [1,3,7,2]
+- ary.pop(2)              #=> [7,2]           ※引数指定する場合は、先頭から引数分だけ取得&配列から除外
+- ary                     #=> [1,3]
+- ary.push(8)             #=> [1,3,8]
+- ary << 4                #=> [1,3,8,4]				※pushと同じ
+
+# 配列が空かどうかの確認
+- [].empty?         #=> true
+- [1,2,3].empty? #=> false
+
+# 配列要素の中で、指定した特定要素を含むか確認
+- [1,2,3].include?(1)    #=> true
+- [1,2,3].include?(10)   #=> false
+
+# ランダムに要素取得
+- [1,3,7,2,5].sample   #=> 5  ※結果は毎回ランダムで選ばれる。
+
+# 配列の複製
+- ary2 = ary1.dup
+
+# 配列要素のシャッフル
+- ary = [0,1,2,3]
+- ary.shuffle = [2,3,1,0]
+
+# 指定した要素の削除
+- ary = [0,1,2,3]
+- ary.delete_at(2)			#=> 2
+- ary   								#=> [0,1,3]
+- ary.delete(3)         #=> 3
+- ary   								#=> [0,1]
+```
+
+### 数値(Fixnum)クラス
+
+```
+# 絶対値を取得
+- (-1).abs          #=> 1
+```
+
+    
+### 浮動小数値(Float)クラス
+
+```
+# 小数値を特定桁で四捨五入
+- (2.58926).round(2)  #=> 2.59
+# 少数値を特定行で切り上
+- (2.42).ceil
+```
+
+### IO
+
+```
+- io#gets
+```
 
 ## ライブラリ管理の基礎
 - gem
