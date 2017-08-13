@@ -175,6 +175,7 @@ end
 def visible
 end
 
+
 # 破壊的なメソッドであれば、末尾に!をつける。
 def sample_split!
 end
@@ -206,26 +207,33 @@ end
 - 特異メソッド
 
 ## 演算子
-- 基本演算
-  - puts 7+5  =>12
-  - puts 7*5   =>35
-  - puts 7/5   =>1　#商
-  - puts 7%5 =>2  #余り
-- 代入演算
-  - 多重代入
-    - a,b = 1,2
-  - 自己代入
-    - 以下は同じ意味
-      - num = num + 1
-      - num += 1
-    - 以下は同じ意味
-      - b ||= 2
-      - b = b || 2
-  - %記法
-      - %w(Alice Bob Chrlie) # => ["Alice", "Bob", "Chrlie"]
-- 論理演算子
-  - && かつ
-  - || または
+
+```
+# 基本演算
+- puts 7+5  =>12
+- puts 7*5  =>35
+- puts 7/5  =>1　#商
+- puts 7%5  =>2  #余り
+
+# 代入演算
+# //多重代入
+  - a,b = 1,2
+  
+# //自己代入
+- 以下は同じ意味
+  - num = num + 1
+  - num += 1
+- 以下は同じ意味
+  - b ||= 2
+  - b = b || 2
+# //%記法
+    - %w(Alice Bob Chrlie) # => ["Alice", "Bob", "Chrlie"]
+ 
+# 論理演算子
+- && かつ
+- || または
+```
+
 
 
 ## 制御構造
@@ -244,7 +252,8 @@ end
 - 組み込みライブラリ一覧(require不要)
   - http://docs.ruby-lang.org/ja/2.1.0/library/_builtin.html
 
-## Kernel
+
+## カーネル(Kernel)クラス
 
 ```
 ## 出力
