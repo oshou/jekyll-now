@@ -107,6 +107,8 @@ tags:
   - **$ traceroute -nT -p [ポート番号] [ip address]** //ICMPの場合
 - ポート疎通確認
   - **$ curl -v telnet://[ip address]:[port num]**
+- HTTPリクエスト&レスポンスヘッダ表示
+  - **$ curl -v [ip or URL] 2> /dev/null**
 - **パケットキャプチャ**
   - **$ tcpdump -vnn -i ethxx**  //基本セット
   - **$ tcpdump -vnn -i ethxx icmp** //ICMPパケットのフィルタ
