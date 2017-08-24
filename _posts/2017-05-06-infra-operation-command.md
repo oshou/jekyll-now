@@ -166,6 +166,13 @@ tags:
     - id: アイドル時間
     - wa: IO待ち時間
     - st: 仮想マシンに盗まれた(steal)時間
+- dentryキャッシュの確認
+  - 使用状況の確認
+    - cat /proc/meminfo | grep Slab
+    - slabtopでdentryの割合を確認
+    - sar -vで内ネガティブdentryの割合を確認
+  - キャッシュの飛ばし方
+    - cat /proc/sys/vm/drop_caches
 
 ### システム全体の負荷(過去履歴)
 - **$ sar**

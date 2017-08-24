@@ -53,6 +53,8 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 **$ mysql> select * from information_schema.table_privileges;**
 - カラムレベルの権限情報一覧
 **$ mysql> select * from information_schema.column_privileges;**
+- アクセス許可
+**grant all privileges on *.* to 'ユーザー名'@'ホスト名' identified by '' with grant option;**
 
 ### 環境変数の確認
 - **MySQLで扱う環境変数は以下2種類がある。**
