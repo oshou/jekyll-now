@@ -13,10 +13,10 @@ KVM仮想化のゲストOS作成手順をまとめてみました。
 =Kernel-based Virtual Machineの略。  
 仮想化は大きく以下3種類がありますが、今回使うKVMは「ホストOS型」と呼ばれるものです。
 - ホストOS型
-  - **ホストOSの上でゲストOSが稼働する。**
+  - **ホストOS上でゲストOSが稼働する。**
   - QEMU,KVM,VirtualBox等
 - HyperVisor型
-  - 低レイヤでHyperVisorと呼ばれる仮想化実行環境を構成し、ゲストOSが稼働する。
+  - 低レイヤでHyperVisorと呼ばれる仮想化実行環境を構成し、その上でゲストOSが稼働する。
   - オーバーヘッドが低い
   - ESXi,Xen,Hyper-V等
 - コンテナ型
@@ -24,11 +24,10 @@ KVM仮想化のゲストOS作成手順をまとめてみました。
   - Docker等
 
 ### KVM環境構築の流れ
-KVMはホストOSの上で、複数のゲストOSが稼働します。  
+KVMはホストOS上で、複数のゲストOSが稼働します。  
 まずはホストOS上でベースとなるKVM環境の作成を行います。  
 その上で、ゲストOS用のイメージ容量確保&ゲストOSのVM作成を行います。  
-通常、OSオリジナルイメージからインストール&初期設定の際には対話型で初期設定が必要ですが、  
-この作業を「KickStart」という仕組みを使って自動化してみました。
+通常、OSオリジナルイメージからインストール&初期設定の際には対話型で初期設定が必要ですが、今回は「KickStart」という仕組みを使って自動化してみました。
 
 ※今回は以下環境で作成  
 KVMホストOS：CentOS7+KVM環境  
@@ -66,33 +65,33 @@ systemctl start libvirted
 ゲストOSが外部と通信できるようにBridgeインターフェースの設定を行います。  
 具体的にはBridgeインターフェースを新規作成し、ホストOSの外部通信用の物理NIC資源と紐付けます。
 ```
-(外部と通信している物理NICがeth0の場合)
-Bridgeインターフェースの定義
+(ホストOSの外部通信用の物理NICがeth0の場合)
+//Bridgeインターフェースの定義
 $ cp -rp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-br0
 $ vim /etc/sysconfig/network-scripts/ifcfg-br0
 DEVICE=br0      <--ここだけ変更
 TYPE=Bridge     <--ここだけ変更
 #HWADDR=xxxxx   <--ここだけ変更(コメントアウトする)
 
-物理NIC資源をBridgeインターフェースに紐付け
+//物理NIC資源をBridgeインターフェースに紐付け
 $ vim /etc/sysconfig/network-scripts/ifcfg-eth0
 DEVICE=eth0
 TYPE=Ethernet
 ONBOOT=yes
 BRIDGE=br0
 
-設定反映のためのnetworkサービス再起動
+//設定反映のためのnetworkサービス再起動
 $ systemctl restart network
 
-br0の認識,IPアドレス割り当てを確認
+//br0の認識,IPアドレス割り当てを確認
 $ ifconfig
 
-br0に紐づくインターフェースとして物理NIC資源eth0が表示されている事を確認
+//br0に紐づくインターフェースとして物理NIC資源eth0が表示されている事を確認
 $ brctl show
 ```
 
 ### ゲストOSに使うISOファイルの準備
-今回はCentOS7のプレーンイメージなので公式からISOデータをダウンロード
+今回はCentOS7のプレーンイメージを使うので公式からISOイメージをダウンロード
 https://www.centos.org/download/
 ```
 cd /tmp
@@ -100,11 +99,12 @@ curl -Lo http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-DVD-
 ```
 
 ### ゲストOSのVMディスク領域の確保
-まずはゲストOS用のVMディスク容量を確保する。この時点では容量確保のみで中身は空の状態。
-ディスクフォーマットは、raw(sparce)、raw(non-sparce)、qcow2の3種類があるのでいずれかを選択。  
+まずはゲストOS用のVMディスク容量を確保する。  
+この時点では容量確保のみで中身は空の状態。
+ディスクフォーマットは、raw(sparce)、raw(non-sparce)、qcow2の3種類があるのでいずれかを選択する。  
 各フォーマットの詳しい説明は以下。  
 http://d.hatena.ne.jp/kt_hiro/20120819/1345351773  
-作成済イメージのディスクフォーマットの調べ方は以下。  
+作成済イメージのディスクフォーマットの確認の仕方は以下。  
 http://d.hatena.ne.jp/kt_hiro/20120819/1345351773  
 今回はサイズ300GB、ディスクフォーマットraw(sparce)で作成。
 ```
@@ -176,7 +176,7 @@ $ ksvalidator centos7-test.ks.cfg
 
 
 ### 仮想マシンの作成
-仮想マシンの作成はvirt-install一発で実行可能。
+仮想マシンの作成は、あとはvirt-installを叩くだけでOK。
 ```
 virt-install \
 --name centos7-template \
