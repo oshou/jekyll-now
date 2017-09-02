@@ -2,7 +2,7 @@
 layout: post
 title: エンジニア御用達ツールまとめ
 tags:
-- tool
+- Tools
 ---
 よく使うツールまとめました、Googleべったりです。  
 あまりデバイス毎に個別管理したくないのでChrome拡張が多いです。  

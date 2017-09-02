@@ -2,7 +2,7 @@
 layout: post
 title: 「Your VM has become "inaccessible."」エラーでVagrant起動に失敗した場合の復旧方法
 tags: 
-- vagrant
+- Vagrant
 ---
 Windows環境でVagrantのVM起動(Vagrant up)でエラーメッセージで起動に失敗した時の復旧方法をまとめました
   

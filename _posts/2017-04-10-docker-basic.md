@@ -2,7 +2,7 @@
 layout: post
 title: Docker初心者の自分が最初に知りたかった事
 tags: 
-- docker
+- Docker
 ---
 最近Dockerやってます!って言いたいがために気軽に調べてみたら、  
 概念をおさえるまでに時間がかかったのでまとめてみました。

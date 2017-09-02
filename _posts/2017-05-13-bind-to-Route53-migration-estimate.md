@@ -3,7 +3,7 @@ layout: post
 title: オンプレBIND運用からRoute53に乗り換えた場合の費用を見積もってみた
 tags: 
 - bind
-- route53
+- Route53
 ---
 社内オンプレでBIND運用しているけど、終わりなきBIND脆弱性対応から開放されたい、、、  
 移行先としてRoute53を検討してみた時に調べたことをまとめてみました。

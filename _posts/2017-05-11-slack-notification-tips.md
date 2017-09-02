@@ -2,7 +2,7 @@
 layout: post
 title: Slack通知設定まとめ
 tags: 
-- slack
+- Slack
 ---
 Slackの通知の基準がよくわからない、なんか夜間通知されていない気がする、、、という方は以下を見てみて下さい。  
   

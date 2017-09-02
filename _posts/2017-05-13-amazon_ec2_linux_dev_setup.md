@@ -2,7 +2,7 @@
 layout: post
 title: Amazon EC2 Linux開発環境構築メモ
 tags: 
-- os
+- OS
 ---
 AWS環境で開発環境構築した時の各種手順をまとめてみました。
   

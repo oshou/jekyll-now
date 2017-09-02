@@ -2,7 +2,7 @@
 layout: post
 title: Vagrant-Saharaプラグインのインストール手順
 tags: 
-- vagrant
+- Vagrant
 ---
 vagrant専用プラグインでサーバー状態の保管・復元出来るsaharaプラグインをインストールしてみた
 ※vagrant導入済みの前提

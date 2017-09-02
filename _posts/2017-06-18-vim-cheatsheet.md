@@ -2,7 +2,7 @@
 layout: post
 title: Vimチートシート(随時更新)
 tag:
-- vim
+- Vim
 ---
 仕事でも個人的にもVimをよく使うのでオプションをまとめてみました
 <!-- more -->

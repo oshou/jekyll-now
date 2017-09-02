@@ -2,7 +2,7 @@
 layout: post
 title: Vimの起動が遅い時のチェックポイント
 tags: 
-- vim
+- Vim
 ---
 Vim起動が遅い時の原因特定に役立ったので備忘録
   

@@ -2,7 +2,7 @@
 layout: post
 title: MongoDB環境構成時のポイント
 tags: 
-- mongodb
+- MongoDB
 ---
 公式MongoDBチェックリストから安定運用のポイントをまとめてみました
   

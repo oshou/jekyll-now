@@ -2,7 +2,7 @@
 layout: post
 title: MySQL基礎コマンド チートシート(随時更新)
 tags:
-- mysql
+- MySQL
 ---
 忘れがちなMySQL基礎コマンドをまとめてみました。
   
