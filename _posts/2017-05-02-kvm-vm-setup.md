@@ -55,11 +55,11 @@ yum -y install \
 ```
 自動起動設定
 ```
-systemctl start libvirted
+systemctl enable libvirted
 ```
 起動
 ```
-systemctl enable libvirted
+systemctl start libvirted
 ```
 
 ### ゲストOS通信用のネットワーク設定
