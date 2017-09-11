@@ -89,7 +89,10 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 
 ## ユーザー操作
 ### ユーザー作成
-$ mysql> create user 'ユーザー名'@'接続元ホスト' IDENTIFIED BY 'パスワード';
+$ mysql> create user 'ユーザー名'@'接続元ホスト' IDENTIFIED BY 'パスワード';  
+ちなみに全ホストへのアクセス許可は'*'ではなく'%'なので注意。  
+$ mysql> create user 'ユーザー名'@'%' IDENTIFIED BY 'パスワード';  
+
 
 ### ユーザー削除
 $ mysql> drop user 'ユーザー名'@'接続元ホスト';
@@ -211,10 +214,10 @@ $ mysql> analize table テーブル名;
 
 ## リストア
 ### 全DBのリストア
-- mysqldump -u'ユーザー名' -p'パスワード' < backup.sql
+- mysql -u'ユーザー名' -p'パスワード' < backup.sql
 
 ### 特定DBのリストア
-- mysqldump -u'ユーザー名' -p'パスワード' DB名 < backup.sql
+- mysql -u'ユーザー名' -p'パスワード' DB名 < backup.sql
 
 ## レプリケーション
 ### マスター稼働状況
