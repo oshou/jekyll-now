@@ -44,6 +44,8 @@ tags:
     - **プロセスの状況は、S(スリープ) / D(割込不可sleep) / T(停止中) / R(実行中) / Z(ゾンビ) / W(スワップアウト)**
 - ディスクIO使用率上位のプロセス一覧
   - $ iotop
+- 特定ポートを使用中のプロセスの確認
+  - $ lsof -i4TCP:8888 
 - プロセスが開いているファイルの特定
   - **$ lsof -p `pgrep プロセス名`**
   - **$ ls -l /proc/プロセスID/fd**
@@ -104,6 +106,8 @@ tags:
   - **$ netstat -pantu**
   - IP別接続数の確認
     - $ netstat -pantu | awk '{print $4}' | cut -d":" -f1 | sort | uniq -c | sort -rn
+  - 使用ポート一覧の確認
+    - netstat -nat | awk '{print $4}' | sed -e 's/.*://' | sort | uniq -c  
 - 通信経路確認
   - **$ traceroute -nI [ip address]** //ICMPの場合
   - **$ traceroute -nT -p [ポート番号] [ip address]** //ICMPの場合
