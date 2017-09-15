@@ -8,6 +8,7 @@ tags:
   
 <!-- more -->
 先頭に「mysql> 」が付いたものはmysqlログイン後、ついていないものはログイン前に実施する。
+**ちなみに値を入れるときは''ではなく``でいれるので注意。**
 
 ## 基本操作
 ### サーバ起動
@@ -89,8 +90,8 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 
 ## ユーザー操作
 ### ユーザー作成
-$ mysql> create user 'ユーザー名'@'接続元ホスト' IDENTIFIED BY 'パスワード';  
-ちなみに全ホストへのアクセス許可は'*'ではなく'%'なので注意。  
+$ mysql> create user `ユーザー名`@`接続元ホスト` IDENTIFIED BY `パスワード`;  
+ちなみに全ホストへのアクセス許可は`*`ではなく`%`なので注意。  
 $ mysql> create user 'ユーザー名'@'%' IDENTIFIED BY 'パスワード';  
 
 
@@ -103,8 +104,9 @@ $ mysql> show grants for 'ユーザー名'@'接続元ホスト';
 
 ### ユーザーへの権限追加
 **$ GRANT 権限 ON DB名.テーブル名 TO ユーザー名@ホスト名  **
-以下例
-$ GRANT ALL ON testdb.* TO 'testuser'@'testhost';
+
+#### 管理者ユーザを作りたい
+$ GRANT ALL ON *.* TO 管理ユーザ名@'%' IDENTIFIED BY 'パスワード' WITH GRANT OPTION;
 
 ### ユーザーへの権限削除
 **$ REVOKE 権限 ON DB名.テーブル名 FROM ユーザー名@ホスト名;**
