@@ -295,15 +295,16 @@ footer {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  border: 2px solid #ff0000;
+  border: 1px solid #ffffff;
 }
 
 th {
-  border: 2px solid #ff0000;
+  border: 1px solid #ffffff;
+  font-weight: bold;
 }
 
 td {
-  border: 1px solid #ff0000;
+  border: 1px solid #ffffff;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
