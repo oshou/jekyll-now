@@ -32,9 +32,9 @@ tags:
 - **Dockerエンジン**
   - ホストマシン上で動くDockerサーバ。各コンテナの管理を行う。
 - **DockerFile**
-  - **Docker環境を作るための設計書**
+  - **Dockerイメージを作るための手順書**
 - **Dockerイメージ**
-  - **設計書(DockerFile)を元に作られた読込専用のテンプレートイメージ**
+  - **手順書(DockerFile)を元に作られた読込専用のテンプレートイメージ**
 - **Dockerレジストリ**
   - **作成したDockerイメージの保管場所**
 - **DockerHub**
@@ -42,22 +42,44 @@ tags:
   - dockerでイメージ取得を行う際のデフォルトレポジトリとなる。
 - Dockerコンテナ
   - アプリケーションの実行環境。
-  - 実体はDockerイメージをインスタンス化、プロセス化したもの
+  - **Dockerイメージをインスタンス化、プロセス化したもの**
 
 ## インストールしてみる
 - Dockerインストール
-  - yum -y install epel-release
-  - yum -y install docker-io
+  - $ yum -y install epel-release
+  - $ yum -y install docker-io
+- インストール確認
+  - $ docker version
+```
+Client:
+ Version:         1.12.6
+ API version:     1.24
+ Package version: docker-1.12.6-32.git88a4867.el7.centos.x86_64
+ Go version:      go1.7.4
+ Git commit:      88a4867/1.12.6
+ Built:           Mon Jul  3 16:02:02 2017
+ OS/Arch:         linux/amd64
+Cannot connect to the Docker daemon. Is the docker daemon running on this host?
+```
 - 起動
-  - systemctl start docker
+  - $ systemctl start docker
 
 ## コンテナを作成してみる
 - 設計書(DockerFile)を記述
-  - vi Dockerfile
+  - $ vi Dockerfile
 - 設計書(Dockerfile)を元にイメージテンプレート(DockerImage)作成
-  - docker build -t [イメージ名] [配置ディレクトリ]
+  - $ docker build -t [イメージ名] [配置ディレクトリ]
 - イメージテンプレート(DockerImage)を元にコンテナ作成
-  - docker run -it イメージ名
+  - $ docker run -dit [イメージ名]
+- コンテナ起動を確認
+  - $ docker ps 
+
+## コンテナに接続してみる
+- コンテナに接続
+  - $ docker exec -it [イメージ名]
+
+## Dockerfileの基本文法
+- http://morizyun.github.io/docker/about-dockerfile-description.html
 
 ## Docker運用のベストプラクティス
 コンテナは素早く柔軟にスケールできるようにするために、ユーザーデータを持たせずいつでも使い捨てられる環境を保つ。  
@@ -94,10 +116,10 @@ tags:
 
 ## よく使う運用コマンド
 ### Docker本体
-- dockerバージョン確認
-  - docker version
-- docker基本情報確認
-  - docker info
+|用途|コマンド|
+|:--|:--|
+|バージョン確認|docker version|
+|docker基本情報確認|docker info|
 
 
 ### イメージ関連
