@@ -12,7 +12,9 @@ tags:
 
 
 ## 前提
-簡易ベンチマークツールabはApache httpdに付属のコマンドなのです。
+- 今回見ることが出来るのはサーバ側の処理性能です。  
+  クライアント側でのJavascript実行時間、HTMLレンダリング等の利用は含まれていません。
+- 簡易ベンチマークツールabはApache httpdに付属のコマンドです。  
 無い場合はサクッとインストールしてしまいましょう。
 
 ```
@@ -43,6 +45,7 @@ $ ab -n <Total発行リクエスト数> -c <同時接続数> <URL>
   - 「Time per Request(meac)」はよく似ていますがこちらは全リクエストのレスポンスタイムなので対象外です。
 3. 秒間何リクエストさばけるか
   - 「Request per second」がどの程度の値となっているか
+  - 「月間1億PV」とかだと、100,000,000 / 30 / 24 / 60 / 60 ≒ 38.5で秒間38.5req/s程度なんですね。
 
 - 出力結果例
 
@@ -85,3 +88,6 @@ Percentage of the requests served within a certain time (ms)
   99%    221
  100%    230 (longest request)
  ```
+## 参考
+- ポイントだけApache Bench
+  - https://sankame.github.io/blog/2014-06-07-apache_bench/
