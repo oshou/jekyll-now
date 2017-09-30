@@ -24,7 +24,12 @@ $ yum install httpd -y
 ## 負荷のかけ方
 
 ```
+// KeepAliveありの場合
 $ ab -n <Total発行リクエスト数> -c <同時接続数> <URL>
+
+// KeepAlive無しの場合
+$ ab -k -n <Total発行リクエスト数> -c <同時接続数> <URL>
+
 ```
 
 ## 結果の見方
@@ -35,17 +40,21 @@ $ ab -n <Total発行リクエスト数> -c <同時接続数> <URL>
 |成功したリクエスト数|Complete requests|
 |失敗したリクエスト数|Failed requests|
 |秒間リクエスト数|Requests per second|
-|平均レスポンスタイム|Time per request(mean, across all concurrent requests)|
+|1リクエストの平均レスポンスタイム|Time per request(mean, across all concurrent requests)|
 
 以下のような観点でそれぞれ必要となります。
 1. すべてのリクエストが正しく処理できているか
   - 「Failed Request」が0以上になっていないか
+  - **0以上になっていてもLengthFailedのみである場合は動的ページ生成した際のContent-lengthとのズレをエラーとして扱っているだけなので無視して良い場合もあります。**
+    - http://kimoto.hatenablog.com/entry/2014/07/28/140843
+    - https://stackoverflow.com/questions/6475692/investigating-apache-benchmark-failed-request
 2. レスポンスタイムにどの程度遅延が見られるか
   - 「Time per request(mean, across all concurrent requests)」が大きな値となっていないか
-  - 「Time per Request(meac)」はよく似ていますがこちらは全リクエストのレスポンスタイムなので対象外です。
+  - **「Time per Request(meac)」はよく似ていますが、こちらは(1リクエストの平均レスポンスタイム)x(同時接続数)なので対象外です。要注意。**
 3. 秒間何リクエストさばけるか
   - 「Request per second」がどの程度の値となっているか
-  - 「月間1億PV」とかだと、100,000,000 / 30 / 24 / 60 / 60 ≒ 38.5で秒間38.5req/s程度なんですね。
+  - 「月間1億PV」とかだと、100,000,000 / 30 / 24 / 60 / 60 ≒ 38.5で実は秒間38.5req/s程度なんですね。  
+途方もない数字に見えても、秒間計算だと割りと身近な数値になってる気がする不思議。
 
 - 出力結果例
 
@@ -89,5 +98,9 @@ Percentage of the requests served within a certain time (ms)
  100%    230 (longest request)
  ```
 ## 参考
+- Apache Bench(ab)を使って初めての負荷検証を行う
+  - https://simple-it-life.com/2016/08/28/apache-bench/
 - ポイントだけApache Bench
   - https://sankame.github.io/blog/2014-06-07-apache_bench/
+- 
+  - http://kimoto.hatenablog.com/entry/2014/07/28/140843
