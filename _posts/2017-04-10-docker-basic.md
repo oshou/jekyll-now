@@ -17,10 +17,10 @@ tags:
 - 開発のライフサイクルが早くなる
 
 ### 独立したアプリ実行環境が作れる
-- ファイルシステム、CPU、メモリ等すべて独立した環境が作れる
+- ファイルシステム、CPU、メモリ等すべて独立した実行環境が作れる
 
 ### ポータビリティが高い
-- アプリ実行環境がパッケージングされているので、自分のローカルPC、他開発メンバーのローカルPC、データセンター上の物理サーバ、VM、クラウド等、どこでも確実に同じ環境が手軽に作れる
+- アプリ実行環境がパッケージングされているので、自分のローカルPC、他開発メンバーのローカルPC、データセンター上の物理サーバ、VM、クラウド等、まったく同じ環境がどこでも手軽に作れる
 
 ### スケールアップ、ダウンが簡単に出来る
 
@@ -76,7 +76,7 @@ Cannot connect to the Docker daemon. Is the docker daemon running on this host?
 
 ## コンテナに接続してみる
 - コンテナに接続
-  - $ docker exec -it [イメージ名]
+  - $ docker exec -it [イメージ名] /bin/bash
 
 ## Dockerfileの基本文法
 - http://morizyun.github.io/docker/about-dockerfile-description.html
@@ -113,6 +113,10 @@ Cannot connect to the Docker daemon. Is the docker daemon running on this host?
 テストの時はRUNを足していって、最後にステップを減らすようにお掃除すると良い。
 - **.dockerignoreを使う。**
   - 不要なファイルは.dockerignoreに記入しビルド対象から外す。  .gitignoreと同じイメージ。
+
+## Dockerfileの書き方
+- MAINTAINERは入れよう
+- コマンドが通らなかったらENVが通っているか確認しよう
 
 ## よく使う運用コマンド
 ### Docker本体

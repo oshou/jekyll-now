@@ -280,6 +280,16 @@ select
 ### TCPIP接続を避ける(同一ホスト内の場合のみ)
 - UNIXドメインソケット接続にする(--skip-networking)
 
+## MySQLの各ファイルの説明
+- テーブル名.frm
+  - テーブル定義ファイル
+- テーブル名.MYD
+  - MyISAMテーブルデータファイル
+- テーブル名.MYI
+  - MyISAMテーブルインデックスファイル
+- テーブル名.ibd
+  - InnoDBテーブルデータファイル
+
 ## 参考
 - MySQL 運用時に便利なコマンド
   - https://www.qoosky.io/techs/3a369dd466
