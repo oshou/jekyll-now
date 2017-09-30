@@ -1,12 +1,12 @@
 ---
 layout: post
-title: apache_bench_simple_performance_test
+title: Apache Benchによる簡易的な負荷テストのやり方
 tags: 
 - test
 - Apache
 ---
 
-とりあえず簡易的な負荷を見てみたい時のApache Benchの使い方
+ガッツリ性能テストの前に、とりあえず簡易的な負荷を見たいときはApache Benchが良さそう
   
 <!-- more -->
 
