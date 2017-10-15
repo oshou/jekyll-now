@@ -34,7 +34,7 @@ tags:
 
 ## プロセス関連
 - プロセス一覧
-  - **$ ps aux -H   //プロセスを階層構造で表示**
+  - **$ ps auxf     //プロセスを階層構造で表示**
   - **$ ps aux -L   //スレッド数、スレッドも表示**
 - リソース使用率上位のプロセス一覧
   - **$ top**
@@ -45,7 +45,7 @@ tags:
 - ディスクIO使用率上位のプロセス一覧
   - $ iotop
 - 特定ポートを使用中のプロセスの確認
-  - $ lsof -i4TCP:8888 
+  - **$ lsof -i4TCP:8888**
 - プロセスが開いているファイルの特定
   - **$ lsof -p `pgrep プロセス名`**
   - **$ ls -l /proc/プロセスID/fd**
@@ -188,6 +188,9 @@ tags:
     - id: アイドル時間
     - wa: IO待ち時間
     - st: 仮想マシンに盗まれた(steal)時間
+- **mpstat -P ALL 1**
+  - CPUコア毎の負荷。
+  - 特定CPUだけ負荷が高い場合はシングルスレッドアプリケーションによるものと判断できる。
 - dentryキャッシュの確認
   - 使用状況の確認
     - cat /proc/meminfo | grep Slab
@@ -197,6 +200,7 @@ tags:
     - cat /proc/sys/vm/drop_caches
 
 ### システム全体の負荷(過去履歴)
+http://d.hatena.ne.jp/end0tknr/20120206/1328499420
 - **$ sar**
   - ロードアベレージ
     - sar -q
@@ -235,3 +239,4 @@ tags:
   - http://qiita.com/ponsuke0531/items/73895dcdbb5ddd7d3331
 - 原因調査用Linuxコマンド
   - http://blog.father.gedow.net/2012/10/23/linux-command-for-trouble/
+- https://gist.github.com/koudaiii/25d80004e16ba16c7e71

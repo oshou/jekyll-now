@@ -155,7 +155,7 @@ $ mysql> desc テーブル名;
 ※descはdescriptionの略
 
 ### テーブル作成
-$ mysql> create table テーブル名;
+$ mysql> create table テーブル名
     -> (
     -> id INT(10),
     -> name VARCHAR(30)
