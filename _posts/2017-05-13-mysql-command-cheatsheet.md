@@ -60,9 +60,9 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 ### 環境変数の確認
 - **MySQLで扱う環境変数は以下2種類がある。**
 **セッション変数：一時設定。現在の接続だけが影響する。**
-- **$ mysql> show global variables;**
-**グローバル変数：恒久設定。変数設定後のすべての接続が影響する。**
 - **$ mysql> show session variables;**
+**グローバル変数：恒久設定。変数設定後のすべての接続が影響する。**
+- **$ mysql> show global variables;**
 絞り込み表示したい場合は以下
 **$ mysql> show variables like 'キーワード'**
 %はアスタリスク的な使い方が出来るので'%キーワード%'のように囲むとあいまい検索が可能

@@ -59,6 +59,10 @@ tag:
 - 該当キーワードを順番に選択置換
   - :%s/置換対象/置換する文字列/gc
 
+## 2ファイル間の差分表示
+http://nanasi.jp/articles/howto/diff/diff_text.html
+- :vertical diffsplit 差分を取りたいファイル
+
 ## 文字コード確認
 - vim自体のエンコード確認
   - :set enc?
