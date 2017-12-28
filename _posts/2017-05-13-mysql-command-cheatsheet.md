@@ -43,6 +43,9 @@ $ mysql  Ver 14.14 Distrib 5.5.34, for Linux (x86_64) using readline 5.1
 ### アクティブプロセス一覧
 **$ mysql> show full processlist;**
 
+### サマリー取得(MySQL Version/currentUser/connectionID/Threads/Query Per Sec ...)
+**$ mysql> STATUS;**
+
 ### 登録済ユーザー・権限一覧
 - 登録済ユーザー一覧
 **$ mysql> select host,user from mysql.user;**
