@@ -30,7 +30,7 @@ tags:
 - **カーネルバージョン,CPUアーキテクチャの確認**
   - **$ cat /proc/version**
 - **OSバージョンの確認**
-  - **$ cat /etc/issue**
+  - **$ cat /etc/system-release**
 - **カーネルモジュール一覧**
   - **$ lsmod**
 - **特定モジュールの詳細情報取得**
