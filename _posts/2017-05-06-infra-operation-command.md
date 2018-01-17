@@ -4,9 +4,9 @@ title: インフラ運用コマンド チートシート(随時更新)
 tags:
 - os
 ---
-インフラ運用で個人用にこれだけはすぐ叩けるように覚えておきたい必須コマンドをまとめてみました。  
+インフラ運用で個人用にこれだけはすぐ叩けるように覚えておきたい必須コマンドをまとめてみました。
 随時更新
-  
+
 <!-- more -->
 
 ## 始める前に
@@ -135,6 +135,8 @@ tags:
 - 改行コード表示、変更
   - $ vimで開いて「:set ff?」         //確認の場合
   - $ vimで開いて「:set ff=unix」     //変更の場合
+- ダミーファイル作成
+  - $ dd if=/dev/zero of=/path/to/work bs=1M count=1000
 - バイナリダンプ確認
   - $ objdump {ファイル名}
 
@@ -164,7 +166,7 @@ tags:
   - IP別接続数の確認
     - $ netstat -pantu | awk '{print $4}' | cut -d":" -f1 | sort | uniq -c | sort -rn
   - 使用ポート一覧の確認
-    - netstat -nat | awk '{print $4}' | sed -e 's/.*://' | sort | uniq -c  
+    - netstat -nat | awk '{print $4}' | sed -e 's/.*://' | sort | uniq -c
 - 通信経路確認
   - **$ traceroute -nI [ip address]** //ICMPの場合
   - **$ traceroute -nT -p [ポート番号] [ip address]** //ICMPの場合
