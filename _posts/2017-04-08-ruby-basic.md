@@ -1,11 +1,11 @@
 ---
 layout: post
 title: Ruby基礎文法最速マスター(随時更新)
-tags: 
+tags:
 - ruby
 ---
 
-Rubyの基本文法、基礎知識をまとめてみました。  
+Rubyの基本文法、基礎知識をまとめてみました。
 <!-- more -->
 
 ## 必須資料
@@ -57,7 +57,7 @@ Rubyの基本文法、基礎知識をまとめてみました。
 ```
 
 ## データ型
-**オブジェクト型のみ**  
+**オブジェクト型のみ**
 **一般的な文字列、配列等はすべてクラス扱い(Stringクラス、Arrayクラス等) **
 ```
 # 文字列
@@ -135,10 +135,10 @@ puts "値は#{sample_variable}です"
 
 # グローバル変数の場合は、先頭に$
 $global_sample_variable = "global"
- 
+
 # インスタンス変数の場合は、先頭に@
 @instance_sample_variable = "instance"
- 
+
 # クラス変数の場合は、先頭に@@
 @@class_sample_variable = "class"
 
@@ -218,7 +218,7 @@ end
 # 代入演算
 # //多重代入
   - a,b = 1,2
-  
+
 # //自己代入
 - 以下は同じ意味
   - num = num + 1
@@ -228,7 +228,7 @@ end
   - b = b || 2
 # //%記法
     - %w(Alice Bob Chrlie) # => ["Alice", "Bob", "Chrlie"]
- 
+
 # 論理演算子
 - && かつ
 - || または
@@ -256,12 +256,13 @@ end
 ## カーネル(Kernel)クラス
 
 ```
+## 入力
+- gets
+
 ## 出力
 - print #改行なし
 - puts  #改行あり
 - sprintf
-## 入力
-- gets
 ```
 
 ### 文字列(String)クラス
@@ -374,7 +375,7 @@ end
 - (-1).abs          #=> 1
 ```
 
-    
+
 ### 浮動小数値(Float)クラス
 
 ```
