@@ -80,7 +80,22 @@ tags:
     - **オプションzx押してからShift+< or Shift+>で項目ごとに降順ソート可能。**
     - **オプションfで表示項目を選択可能。Spaceで選択/非選択、ESCで決定**
     - **オプションeでメモリの単位切替可能。**
-    - **プロセスの状況は、S(スリープ) / D(割込不可sleep) / T(停止中) / R(実行中) / Z(ゾンビ) / W(スワップアウト)**
+    - **プロセスの状況**
+      - **D(割込不可sleep≒I/Owait(ex.diskI/O, NetworkI/O is busy))**
+      - **R(実行中)**
+      - **S(割込可スリープ)**
+      - **T(停止中)**
+      - **t(停止中)**
+      - **W(スワップアウト)**
+      - **Z(ゾンビ)**
+      - **X(死亡)**
+    - 以下オプション
+      - <    high-priority (not nice to other users)
+      - N    low-priority (nice to other users)
+      - L    has pages locked into memory (for real-time and custom IO)
+      - s    is a session leader
+      - l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)
+      - +    is in the foreground process group
 - プロセス毎のメモリ消費量詳細
   - **pmap [プロセスID]**
 - ディスクIO使用率上位のプロセス一覧
@@ -175,17 +190,21 @@ tags:
 - HTTPリクエスト&レスポンスヘッダ表示
   - **$ curl -v [ip or URL] 2> /dev/null**
 - **パケットキャプチャ**
-  - **$ tcpdump -vnn -i ethxx**  //基本セット
-  - **$ tcpdump -vnn -i ethxx icmp** //ICMPパケットのフィルタ
-  - **$ tcpdump -vnn -i ethxx port xx**  //port指定
-  - **$ tcpdump -vnn -i ethxx host xxx.xxx.xxx.xxx**  //特定ホストを抽出
-  - **$ tcpdump -vnn -i ethxx not host xxx.xxx.xxx.xxx**  //特定ホストを除外
-  - **Flagsの意味**
-    - **.(ACK) / S(SYN) / F(FIN) / P(PUSH) / R(RST) / U(URG) / W(ECN CWR) / E(ECN-Echo)**
-  - **Flagの基本的なパターン**
-    - http://d.hatena.ne.jp/nattou_curry_2/20090822/1250931250
-    - **TCPコネクション開始 --> (CLIENT). -> (SRV)S. -> (CLIENT). //3-way handshake**
-    - **TCPコネクション切断 --> (CLIENT)F. -> (SRV)F. -> (CLIENT).**
+  - tcpdump
+    - **$ tcpdump -vnn -i ethxx**  //基本セット
+    - **$ tcpdump -vnn -i ethxx icmp** //ICMPパケットのフィルタ
+    - **$ tcpdump -vnn -i ethxx port xx**  //port指定
+    - **$ tcpdump -vnn -i ethxx host xxx.xxx.xxx.xxx**  //特定ホストを抽出
+    - **$ tcpdump -vnn -i ethxx not host xxx.xxx.xxx.xxx**  //特定ホストを除外
+    - **Flagsの意味**
+      - **.(ACK) / S(SYN) / F(FIN) / P(PUSH) / R(RST) / U(URG) / W(ECN CWR) / E(ECN-Echo)**
+    - **Flagの基本的なパターン**
+      - http://d.hatena.ne.jp/nattou_curry_2/20090822/1250931250
+      - **TCPコネクション開始 --> (CLIENT). -> (SRV)S. -> (CLIENT). //3-way handshake**
+      - **TCPコネクション切断 --> (CLIENT)F. -> (SRV)F. -> (CLIENT).**
+  - tshark
+    - **$tshark -i ethxx  //基本セット**
+    - **$tshark -i -V ethxx  //パケット詳細表示**
 - ルーティングテーブルの情報確認
   - $ netstat -rn
 - 認証方式指定のssh接続
@@ -209,6 +228,7 @@ tags:
 
 ### システム全体の負荷(リアルタイム)
 - **dstat**
+  - **http://oxynotes.com/?p=7566**
   - **$ dstat -tlcmsdrn**
 - **$ vmstat 2**
   - procs
@@ -274,6 +294,8 @@ http://d.hatena.ne.jp/end0tknr/20120206/1328499420
   - リアルタイムのパフォーマンスモニタはこれ1つだけあればOK
 - tcpdump
   - 詳細なネットワークキャプチャ
+- wireshark
+  - 詳細なネットワークキャプチャ。tsharkが使える
 - curl
   - httpリクエスト疎通確認
 - jq
@@ -288,3 +310,14 @@ http://d.hatena.ne.jp/end0tknr/20120206/1328499420
 - 原因調査用Linuxコマンド
   - http://blog.father.gedow.net/2012/10/23/linux-command-for-trouble/
 - https://gist.github.com/koudaiii/25d80004e16ba16c7e71
+
+
+@f.kosaka
+e001-preview11 環境お返しいたします。
+本日お借りしたpreview環境でも、httpsアクセス時にpluginと同様の負荷上昇が見られました。
+引き続き調査を進めるように致します。
+ご協力ありがとうございました。
+・e001-preview11の/etc/httpd/conf.d/ssl.confは変更前の設定に戻しています。
+・/var/www/html上に本日追加したファイルは削除済です。
+
+
