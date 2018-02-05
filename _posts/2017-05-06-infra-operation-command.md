@@ -73,7 +73,7 @@ tags:
 - 自身のプロセスIDの確認
   - **$ echo $$**
 - プロセス一覧
-  - **$ ps auxf     //プロセスを階層構造で表示**
+  - **$ ps aux -H   //プロセスを階層構造で表示**
   - **$ ps aux -L   //スレッド数、スレッドも表示**
 - リソース使用率上位のプロセス一覧
   - **$ top**
@@ -129,8 +129,10 @@ tags:
   - **yum-config-manager**
 - **rpmのパッケージ一覧**
   - **rpm -qa**
-- **rpmの各パッケージ別提供ファイル一覧**
+- **特定パッケージの提供ファイル一覧確認**
   - **rpm -ql パッケージ名**
+- **特定ファイルの提供パッケージ確認**
+  - **rpm -qf パッケージ名**
 
 ## ファイル操作
 - ファイル内容の編集
@@ -220,6 +222,16 @@ tags:
   - $ cat /var/spool/cron/*
 - ユーザー個別のcron
   - $ cat /var/spool/cron/ユーザー名
+
+## 証明書関連
+- 公開鍵情報
+  - (全体)openssl x509 -noout -text -in {crt file}
+  - (ハッシュ)openssl x509 -noout -modulus -in {crt file} | openssl md5
+  - (期限) openssl x509 -noout -dates -in {crt file}
+- 秘密鍵情報
+  - (全体)openssl rsa -noout -text -in {key file}
+  - (ハッシュ)openssl rsa -noout -modulus -in {key file} | openssl md5
+
 
 ## パフォーマンス
 **リアルタイム負荷は何はなくともvmstat。出来ればdstatをインストール。
