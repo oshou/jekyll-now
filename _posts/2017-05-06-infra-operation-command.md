@@ -310,6 +310,9 @@ http://d.hatena.ne.jp/end0tknr/20120206/1328499420
   - 詳細なネットワークキャプチャ。tsharkが使える
 - curl
   - httpリクエスト疎通確認
+- ncdu
+  - 容量整理
+  - ncdu
 - jq
   - json整形用
 
@@ -322,14 +325,3 @@ http://d.hatena.ne.jp/end0tknr/20120206/1328499420
 - 原因調査用Linuxコマンド
   - http://blog.father.gedow.net/2012/10/23/linux-command-for-trouble/
 - https://gist.github.com/koudaiii/25d80004e16ba16c7e71
-
-
-@f.kosaka
-e001-preview11 環境お返しいたします。
-本日お借りしたpreview環境でも、httpsアクセス時にpluginと同様の負荷上昇が見られました。
-引き続き調査を進めるように致します。
-ご協力ありがとうございました。
-・e001-preview11の/etc/httpd/conf.d/ssl.confは変更前の設定に戻しています。
-・/var/www/html上に本日追加したファイルは削除済です。
-
-
