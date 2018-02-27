@@ -80,6 +80,7 @@ tags:
     - **オプションzx押してからShift+< or Shift+>で項目ごとに降順ソート可能。**
     - **オプションfで表示項目を選択可能。Spaceで選択/非選択、ESCで決定**
     - **オプションeでメモリの単位切替可能。**
+    - **オプション1でCPUコア毎の使用率を切替可能。**
     - **プロセスの状況**
       - **D(割込不可sleep≒I/Owait(ex.diskI/O, NetworkI/O is busy))**
       - **R(実行中)**
@@ -190,7 +191,7 @@ tags:
 - ポート疎通確認
   - **$ curl -v telnet://[ip address]:[port num]**
 - HTTPリクエスト&レスポンスヘッダ表示
-  - **$ curl -v [ip or URL] 2> /dev/null**
+  - **$ curl -v [ip or URL]**
 - **パケットキャプチャ**
   - tcpdump
     - **$ tcpdump -vnn -i ethxx**  //基本セット
@@ -231,7 +232,6 @@ tags:
 - 秘密鍵情報
   - (全体)openssl rsa -noout -text -in {key file}
   - (ハッシュ)openssl rsa -noout -modulus -in {key file} | openssl md5
-
 
 ## パフォーマンス
 **リアルタイム負荷は何はなくともvmstat。出来ればdstatをインストール。
@@ -312,7 +312,6 @@ http://d.hatena.ne.jp/end0tknr/20120206/1328499420
   - httpリクエスト疎通確認
 - ncdu
   - 容量整理
-  - ncdu
 - jq
   - json整形用
 
