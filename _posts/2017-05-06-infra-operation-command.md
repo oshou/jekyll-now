@@ -213,6 +213,8 @@ tags:
 - 認証方式指定のssh接続
   - $ ssh [接続先IP] -o PreferredAuthentications=publickey   //鍵認証
   - $ ssh [接続先IP] -o PreferredAuthentications=password    //パスワード
+- 鍵の暗号化強度の確認
+  - $ ssh-keygen -l -f ~/.ssh/id_rsa.pub
 
 ## 名前解決関連
 - **$ dig [ドメイン名] @[ネームサーバー名]**
